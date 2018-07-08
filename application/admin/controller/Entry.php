@@ -4,8 +4,8 @@ namespace app\admin\controller;
 
 use \think\Controller;
 
-class Base extends Controller{
+class Entry extends Controller{
     public function login(){
-        
+        return view();
     }
 }
