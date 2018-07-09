@@ -22,7 +22,6 @@ class Entry extends Controller{
                 $this->error('登陆失败');
             }
 
-            //session('uid', $result);
             Session::set('uid', $result);
             $this->success('登陆成功', '/admin/main/index');
         }
