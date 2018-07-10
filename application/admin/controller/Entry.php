@@ -18,12 +18,13 @@ class Entry extends Controller{
             ];
 
             $result = Model('admin')->checkAdmin($data);
-            if(!$result ){
+            if(!$result){
                 $this->error('登陆失败');
             }
 
-            Session::set('uid', $result);
+            Session::set('username', $result);
             $this->success('登陆成功', '/admin/main/index');
+            //$this->success(Session::get('username'));
         }
 
         return view();

@@ -13,12 +13,12 @@ class Admin extends Model{
         $username = $data['username'];
         $password = $data['password'];
 
-        $result = $this->where("username='$username' and password='$password'")->value('uid');
+        $result = $this->where("username='$username' and password='$password'")->value('username');
         if($result){
             return $result;
         }
 
         return false;
     }
-    
+
 }
