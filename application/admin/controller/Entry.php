@@ -23,8 +23,9 @@ class Entry extends Controller{
             }
 
             Session::set('username', $result);
-            $this->success('登陆成功', '/admin/main/index');
+            //$this->success('登陆成功', '/admin/main/index');
             //$this->success(Session::get('username'));
+            $this->success($_SERVER);
         }
 
         return view();
