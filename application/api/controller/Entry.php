@@ -13,7 +13,9 @@ class Entry extends Controller{
         ];
         $result = Model('user')->checkUser($data);
         if($result){
+            $uid = $result['uid'];
             $redis = $this->redisConnect();
+            $redis->setex('');
             returnJson(1, '登陆成功');
         }
         returnJson(0, '登陆失败');
