@@ -46,8 +46,8 @@
                     success: function(data){
                         //console.log(data);
                         if(data.code == 1){
-                            //location.href = data.url;
-                            console.log(data.msg);
+                            location.href = data.url;
+                            //console.log(data.msg);
                         }else if(data.code == 0){
                             layer.msg("登陆失败", {icon: 5});
                         }
