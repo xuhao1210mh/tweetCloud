@@ -18,6 +18,11 @@ class User extends Model{
 
     //添加用户
     public function postUser($data){
+        $phone = $data['phone'];
+        $retuslt = $this->where("phone='$phone'")->find();
+        if($result){
+            return 0;
+        }
         $result = $this->save($data);
         if($result){
             return 1;
@@ -39,9 +44,9 @@ class User extends Model{
     public function checkUser($data){
         $phone = $data['username'];
         $password = $data['password'];
-        $uid = $this->where("phone='$phone' and password='$password'")->value('uid');
-        if($uid){
-            return $uid;
+        $result = $this->where("phone='$phone' and password='$password'")->find();
+        if($result){
+            return $result;
         }else{
             return 0;
         }

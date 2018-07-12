@@ -11,18 +11,20 @@ class User extends Base{
         
     }
 
+    //展示用户列表
     public function userList(){
         $result = Model('user')->getUser();
         $this->assign('result', $result);
         return view();
     }
 
+    //添加用户
     public function userAdd(Request $request){
         if($request->isAjax()){
             $data = [
-                'phone' => $_POST['phone'],
+                'phone' => md5($_POST['phone']),
                 'nickname' => $_POST['nickname'],
-                'password' => $_POST['password'],
+                'password' => md5($_POST['password']),
                 'level' => 1,
                 'create_time' => date('Y-m-d H:i:s'),
                 'status' => 1
