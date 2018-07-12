@@ -7,7 +7,7 @@ use \think\Request;
 
 class CustomerCenter extends Base{
 
-    public function _initialize(){
+    public function __construct(){
         
     }
 

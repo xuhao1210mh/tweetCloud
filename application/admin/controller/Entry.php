@@ -13,8 +13,8 @@ class Entry extends Controller{
         if($request->isAjax()){
 
             $data = [
-                'username' => input('post.username'),
-                'password' => input('post.password'),
+                'username' => $_POST['username'],
+                'password' => $_POST['password'],
             ];
 
             $result = Model('admin')->checkAdmin($data);
@@ -24,8 +24,6 @@ class Entry extends Controller{
 
             Session::set('username', $result);
             $this->success('登陆成功', '/admin/main/index');
-            //$this->success(Session::get('username'));
-            //$this->success($_SERVER);
         }
 
         return view();

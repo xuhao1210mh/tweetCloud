@@ -25,12 +25,23 @@ class User extends Model{
         return 0;
     }
 
-    public function checkUser($data){
-        $username = $data['username'];
-        $password = $data['password'];
-        $result = $this->where("phone='$username' and password='$password'")->value('uid, phone');
+    //删除用户
+    public function deleteUser($uid){
+        $result = $this->where("uid=$uid")->delete();
         if($result){
-            return $result;
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
+    //用户登陆时，进行检测
+    public function checkUser($data){
+        $phone = $data['username'];
+        $password = $data['password'];
+        $uid = $this->where("phone='$phone' and password='$password'")->value('uid');
+        if($uid){
+            return $uid;
         }else{
             return 0;
         }

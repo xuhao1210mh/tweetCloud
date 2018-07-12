@@ -3,22 +3,35 @@
 namespace app\api\controller;
 
 use \think\Controller;
+use \app\api\controller\Base;
 
-class Entry extends Controller{
+class Entry extends Base{
+
+    public function __construct(){
+
+    }
 
     public function login(){
+        // $data = [
+        //     'phone' => $_POST['phone'],
+        //     'password' => $_POST['password']
+        // ];
         $data = [
-            'username' => $_POST['username'],
-            'password' => $_POST['password']
+            'username' => '1875219984',
+            'password' => 'xuhao9898'
         ];
         $result = Model('user')->checkUser($data);
-        if($result){
-            $uid = $result['uid'];
-            $redis = $this->redisConnect();
-            $redis->setex('');
-            returnJson(1, '登陆成功');
+        if(!empty($result)){
+            //$uid = $result['uid'];
+            //$redis = $this->redisConnect();
+            //$redis->setex('');
+            $this->returnJson(1, '登陆成功');
         }
-        returnJson(0, '登陆失败');
+        $this->returnJson(0, '登陆失败');
+    }
+
+    public function test(){
+        parent::__construct();
     }
 
 }

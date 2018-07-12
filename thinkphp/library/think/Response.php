@@ -150,6 +150,7 @@ class Response
             foreach ($this->header as $name => $val) {
                 header($name . (!is_null($val) ? ':' . $val : ''));
             }
+            header('HTTP/1.1 200 OK');
         }
 
         $this->sendData($data);

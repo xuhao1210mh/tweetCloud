@@ -36,4 +36,15 @@ class User extends Base{
         }
         return view();
     }
+
+    //用户删除
+    public function userDel(){
+        $uid = $_POST['uid'];
+        $result = Model('user')->deleteUser($uid);
+        if($result){
+            $this->success('删除成功');
+        }else{
+            $this->error('删除失败');
+        }
+    }
 }
