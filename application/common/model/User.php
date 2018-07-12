@@ -19,7 +19,7 @@ class User extends Model{
     //添加用户
     public function postUser($data){
         $phone = $data['phone'];
-        $retuslt = $this->where("phone='$phone'")->find();
+        $result = $this->where("phone='$phone'")->find();
         if($result){
             return 0;
         }

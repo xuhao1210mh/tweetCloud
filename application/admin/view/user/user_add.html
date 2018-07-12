@@ -113,7 +113,14 @@
                 },
                 success: function(res){
                     if(res.code == 1){
-                        layer.alert("增加成功", {icon: 6},function () {
+                        layer.alert("添加用户成功", {icon: 6},function () {
+                            // 获得frame索引
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭当前frame
+                            parent.layer.close(index);
+                        });
+                    }else{
+                        layer.alert("增加用户失败", {icon: 5},function () {
                             // 获得frame索引
                             var index = parent.layer.getFrameIndex(window.name);
                             //关闭当前frame
