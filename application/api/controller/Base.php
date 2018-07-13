@@ -49,6 +49,7 @@ class Base extends Controller{
         exit;
     }
 
+    //创建redis连接
     public function redisConnect(){
         $redis = new \Redis();
         $redis->connect('127.0.0.1', 6379);

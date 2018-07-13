@@ -6,14 +6,12 @@ use \app\api\controller\Base;
 use \think\Request;
 use \think\facade\Session;
 
-class CustomerCenter extends Base{
+class PersonalCenter extends Base{
 
-    public function pushList(){
+    public function userInfo(){
         $this->checkSession();
         $uid = Session::get('uid');
-        $date = $_POST['date'];
-        $date = '2018-07';
-        $result = Model('push')->getPush($uid, $date);
+        $result = Model('user')->getUserInfo($uid);
         $this->returnJson(1, '成功', $result);
     }
 

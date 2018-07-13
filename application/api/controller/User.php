@@ -11,7 +11,7 @@ class User extends Base{
     //登陆
     public function login(){
         $data = [
-            'phone' => md5($_POST['phone']),
+            'phone' => $_POST['phone'],
             'password' => md5($_POST['password'])
         ];
         $result = Model('user')->checkUser($data);
@@ -26,6 +26,7 @@ class User extends Base{
         $this->returnJson(0, '登陆失败');
     }
 
+    //退出登陆
     public function logout(){
         Session::delete('uid');
         $uid = Session::get('uid');

@@ -52,4 +52,10 @@ class User extends Model{
         }
     }
 
+    //按佣金进行排序
+    public function getSequence(){
+        $result = $this->order("money desc")->select();
+        return $result;
+    }
+
 }
