@@ -47,7 +47,6 @@ class User extends Model{
         $phone = $data['phone'];
         $password = $data['password'];
         $result = $this->where("phone='$phone' and password='$password'")->find();
-        //$result = Db::query("select uid,phone from user where phone='$phone' and password='$password'");
         if($result){
             return $result;
         }else{
@@ -58,6 +57,12 @@ class User extends Model{
     //按佣金进行排序
     public function getSequence(){
         $result = $this->order("money desc")->select();
+        return $result;
+    }
+
+    //获取用户信息
+    public function getUserInfo($uid){
+        $result = Db::query("select uid,phone,nickname,money,level,head from user where uid='$uid'");
         return $result;
     }
 
