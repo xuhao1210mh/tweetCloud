@@ -9,7 +9,7 @@ class Push extends Model{
     protected $table = 'push';
 
     public function getPush($uid, $date){
-        $result = $this->where("uid='$uid'and create_date='$date'")->select();
+        $result = $this->where("uid='$uid' and create_date='$date'")->select();
         return $result;
     }
 

@@ -42,7 +42,7 @@ class User extends Model{
 
     //用户登陆时，进行检测
     public function checkUser($data){
-        $phone = $data['username'];
+        $phone = $data['phone'];
         $password = $data['password'];
         $result = $this->where("phone='$phone' and password='$password'")->find();
         if($result){
