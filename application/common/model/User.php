@@ -3,9 +3,11 @@
 namespace app\common\model;
 
 use \think\Model;
+use \think\Db;
 
 class User extends Model{
 
+    //对应user表
     protected $table = 'user';
 
     //获取用户
@@ -45,6 +47,7 @@ class User extends Model{
         $phone = $data['phone'];
         $password = $data['password'];
         $result = $this->where("phone='$phone' and password='$password'")->find();
+        //$result = Db::query("select uid,phone from user where phone='$phone' and password='$password'");
         if($result){
             return $result;
         }else{

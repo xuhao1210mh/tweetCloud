@@ -10,9 +10,13 @@ class User extends Base{
 
     //登陆
     public function login(){
+        // $data = [
+        //     'phone' => $_POST['phone'],
+        //     'password' => md5($_POST['password'])
+        // ];
         $data = [
-            'phone' => $_POST['phone'],
-            'password' => md5($_POST['password'])
+            'phone' => '18752119984',
+            'password' => md5('989898')
         ];
         $result = Model('user')->checkUser($data);
         if(!empty($result)){
