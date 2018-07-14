@@ -8,6 +8,7 @@ use \think\facade\Session;
 
 class PersonalCenter extends Base{
 
+    //展示用户信息
     public function userInfo(){
         $this->checkToken();
         $uid = Session::get('uid');
