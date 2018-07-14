@@ -24,14 +24,6 @@ class Base extends Controller{
         }
     }
 
-    //检测session
-    public function checkSession(){
-        $uid = Session::get('uid');
-        if(empty($uid)){
-            self::returnJson(11, '用户未登陆');
-        }
-    }
-
     //返回json数据
     public function returnJson($code, $msg, $data = null){
         $response = [

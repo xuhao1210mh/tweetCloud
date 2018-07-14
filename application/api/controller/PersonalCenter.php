@@ -9,7 +9,7 @@ use \think\facade\Session;
 class PersonalCenter extends Base{
 
     public function userInfo(){
-        $this->checkSession();
+        $this->checkToken();
         $uid = Session::get('uid');
         $result = Model('user')->getUserInfo($uid);
         $this->returnJson(1, '成功', $result);
