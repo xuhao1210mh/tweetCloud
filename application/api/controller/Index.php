@@ -8,7 +8,7 @@ use \think\facade\Session;
 class Index extends Base{
 
     public function message(){
-
+        
     }
 
     //佣金排行
