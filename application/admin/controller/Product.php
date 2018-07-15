@@ -41,10 +41,13 @@ class Product extends Base{
             //$file = $_FILES['file'];
             //print_r($_FILES);
             //exit;
+            $file_path = '/files/product/pic/';
             $file = $request->file('file');
-            $info = $file->move($_SERVER['DOCUMENT_ROOT'] . '/files/product/pic');
+            $info = $file->move('./' . $file_path);
             if($info){
-                $this->success($info);
+                $data['pic'] = $file_path . $info->getSaveName();
+                $this->success($data['pic']);
+
             }else{
                 $this->error($file->getError());
             }
