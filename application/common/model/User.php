@@ -11,11 +11,13 @@ class User extends Model{
     protected $table = 'user';
 
     //获取用户
-    public function getUser(){
-
+    public function getUser($phone = ''){
+        if($phone){
+            $result = $this->where("status=1 and phone='$phone'")->select();
+            return $result;
+        }
         $result = $this->where("status=1")->select();
         return $result;
-
     }
 
     //添加用户

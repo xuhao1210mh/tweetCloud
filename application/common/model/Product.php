@@ -7,9 +7,9 @@ use \think\Db;
 
 class Product extends Model{
 
-    //获取产品列表
+    //根据分类id获取产品列表
     public function getProduct($cate_id){
-        $result = Db::query("select product_id,name from product where cate_id=3 order by create_time desc");
+        $result = Db::query("select product_id,name from product where cate_id='$cate_id' order by create_time desc");
         if($result){
             return $result;
         }
@@ -23,6 +23,16 @@ class Product extends Model{
             return $result;
         }
         return 0;
+    }
+
+    //获取产品列表
+    public function getProductList($name = ''){
+        if($name){
+            $reuslt = $this->where("name='$name'")->select();
+            return $result;
+        }
+        $result = $this->where("status=1")->select();
+        return $result;        
     }
 
 }

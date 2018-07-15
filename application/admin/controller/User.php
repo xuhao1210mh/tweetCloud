@@ -12,9 +12,15 @@ class User extends Base{
     }
 
     //展示用户列表
-    public function userList(){
-        $result = Model('user')->getUser();
-        $this->assign('result', $result);
+    public function userList(Request $request){
+        $phone = $_GET['phone'];
+        if(empty($phone)){
+            $result = Model('user')->getUser($phone);
+            $this->assign('result', $result);
+        }else{
+            $result = Model('user')->getUser();
+            $this->assign('result', $result);
+        }
         return view();
     }
 
@@ -32,8 +38,6 @@ class User extends Base{
             ];
             $result = Model('user')->postUser($data);
             if($result == 1){
-                // $filename = $data['phone'];
-                // self::createFile($filename);
                 $this->success('增加成功');
             }else{
                 $this->error('增加失败');
