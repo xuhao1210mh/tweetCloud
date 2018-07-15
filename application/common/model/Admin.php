@@ -8,6 +8,7 @@ class Admin extends Model{
     //对应表为admin表
     protected $table = 'admin';
 
+    //验证管理员的登录信息
     public function checkAdmin($data){
 
         $username = $data['username'];
@@ -19,6 +20,16 @@ class Admin extends Model{
         }
 
         return false;
+    }
+
+    //创建管理员
+    public function createAdmin($data){
+
+    }
+
+    //删除管理员
+    public function deleteAdmin($uid){
+        
     }
 
 }

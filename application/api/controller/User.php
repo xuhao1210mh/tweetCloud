@@ -23,7 +23,7 @@ class User extends Base{
             $redis->setex(md5($uid), 432000, $uid);
             $this->returnJson(1, '登陆成功', md5($uid));
         }
-        $this->returnJson(0, '登陆失败');
+        $this->returnJson(0, '用户名或密码错误');
     }
 
     //退出登陆

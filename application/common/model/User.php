@@ -56,14 +56,22 @@ class User extends Model{
 
     //按佣金进行排序
     public function getSequence(){
-        $result = $this->order("money desc")->select();
-        return $result;
+        // $result = $this->order("money desc")->select();
+        $result = Db::table('user')->field('uid,name,money')->limit(3)->select();
+        if($result){
+            return $result;
+        }
+        return 0;
     }
 
-    //获取用户信息
+    //获取用户信息(个人中心)
     public function getUserInfo($uid){
-        $result = Db::query("select uid,phone,nickname,money,level,head from user where uid='$uid'");
-        return $result;
+        $result = Db::table('user')->field('uid,phone,nickname,level,head')->where("uid='$uid'")->find();
+        //$result = Db::query("select uid,phone,nickname,money,level,head from user where uid='$uid'");
+        if($result){
+            return $result;
+        }
+        return 0;
     }
 
 }

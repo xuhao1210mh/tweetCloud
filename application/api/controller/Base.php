@@ -21,6 +21,7 @@ class Base extends Controller{
             self::returnJson(11, '请登陆');
         }else{
             $redis->setex($token, 432000, $uid);
+            return $token;
         }
     }
 

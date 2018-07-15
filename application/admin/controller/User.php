@@ -26,13 +26,14 @@ class User extends Base{
                 'nickname' => $_POST['nickname'],
                 'password' => md5($_POST['password']),
                 'level' => 1,
+                'money' => 0,
                 'create_time' => date('Y-m-d H:i:s'),
                 'status' => 1
             ];
             $result = Model('user')->postUser($data);
             if($result == 1){
-                $filename = $data['phone'];
-                self::createFile($filename);
+                // $filename = $data['phone'];
+                // self::createFile($filename);
                 $this->success('增加成功');
             }else{
                 $this->error('增加失败');
