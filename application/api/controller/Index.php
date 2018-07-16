@@ -8,8 +8,8 @@ class Index extends Base{
 
     //系统公告
     public function message(){
-        $info = Model('push')->getPushInfo();
-        $this->returnJson(1, '请求成功', $info);
+        //$info = Model('push')->getPushInfo();
+        //$this->returnJson(1, '请求成功', $info);
         $result = Model('message')->getMessage();
         if($result){
             $this->returnJson(1, '请求成功', $result);
@@ -36,8 +36,15 @@ class Index extends Base{
 
     //产品列表
     public function product(){
-        $cate_id = $_POST['cate_id'];
-        $result = Model('product')->getProduct($cate_id);
+        //$cate_id = $_POST['cate_id'];
+        $card = Model('product')->getProduct(1);
+        $bond = Model('product')->getProduct(2);
+        $loan = Model('product')->getProduct(3);
+        $result = [
+            'card' => $card,
+            'bond' => $bond,
+            'loan' => $loan
+        ];
         if($result){
             $this->returnJson(1, '成功', $result);
         }
@@ -51,6 +58,15 @@ class Index extends Base{
         $result = Model('product')->getProductInfo($product_id);
         if($result){
             $this->returnJson(1, '成功', $result);
+        }
+        $this->returnJson(0, '请求失败');
+    }
+
+    //获取客服微信号
+    public function wechat(){
+        $wechat_number = Model('setting')->getWechat();
+        if($wechat){
+            $this->returnJson(1, '请求成功', $wechat);
         }
         $this->returnJson(0, '请求失败');
     }

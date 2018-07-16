@@ -10,8 +10,8 @@ class Message extends Model{
     protected $table = 'message';
 
     //获取系统公告
-    public function getMessage($date){
-        $result = $this->order("create_time desc")->limit(5)->select();
+    public function getMessage(){
+        $result = Db::table('message')->field('content')->order("create_time desc")->limit(5)->select();
         if($result){
             return $result;
         }

@@ -25,7 +25,7 @@ class Product extends Model{
 
     //根据分类id获取产品列表
     public function getProduct($cate_id){
-        $result = Db::query("select product_id,name from product where cate_id='$cate_id' order by create_time desc");
+        $result = Db::query("select product_id,name,pic,method from product where cate_id='$cate_id' order by create_time desc");
         if($result){
             return $result;
         }
