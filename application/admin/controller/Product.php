@@ -40,17 +40,26 @@ class Product extends Base{
         if($request->isAjax()){
             $file_path = '/files/product/pic/';
             $file = $request->file();
+
             foreach($file as $v){
                 $file_info = $v;
             }
-            $info = $file_info->move('./' . $file_path);
+
+            $image = \think\Image::open($file_info);
+            $ext =  $image->type();
+            $img_path = $file_path . time() . '.' .$ext;
+            $info = $image->thumb(400, 400)->save($img_path);
+
+            //print_r($_SERVER['HTTP_ORIGIN']);exit;
+            $this->success($_SERVER['HTTP_ORIGIN'] . $img_path);
+
             if($info){
-                $data['pic'] = $file_path . $info->getSaveName();
-                $data['name'] = $_POST['name'];
-                $data['cate_id'] = $_POST['cate_id'];
-                $data['url'] = $_POST['url'];
-                $data['create_time'] = date("Y:m:d H:i:s");
-                $reult = Model('product')->createProduct($data);
+                // $data['pic'] = $file_path . $info->getSaveName();
+                // $data['name'] = $_POST['name'];
+                // $data['cate_id'] = $_POST['cate_id'];
+                // $data['url'] = $_POST['url'];
+                // $data['create_time'] = date("Y-m-d H:i:s");
+                // $reult = Model('product')->createProduct($data);
             }else{
                 $this->error($file->getError());
             }
