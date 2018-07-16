@@ -8,8 +8,9 @@ class Index extends Base{
 
     //系统公告
     public function message(){
-        $date = $_POST['date'];
-        $result = Model('message')->getMessage($date);
+        $info = Model('push')->getPushInfo();
+        $this->returnJson(1, '请求成功', $info);
+        $result = Model('message')->getMessage();
         if($result){
             $this->returnJson(1, '请求成功', $result);
         }
@@ -23,6 +24,14 @@ class Index extends Base{
             $this->returnJson(1, '请求成功', $result);
         }
         $this->returnJson(0, '请求失败');
+    }
+
+    //各种类产品数量
+    public function Quantity(){
+        $data['card'] = Model('product')->getQuantity(1);
+        $data['bond'] = Model('product')->getQuantity(2);
+        $data['loan'] = Model('product')->getQuantity(3);
+        $this->returnJson(1, '请求成功', $data);
     }
 
     //产品列表

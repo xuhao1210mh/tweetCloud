@@ -15,8 +15,10 @@ class Client extends Model{
 
     public function postClient($data){
         $result = $this->save($data);
+        $client['client_id'] = $data['client_id'];
+        $client['name'] = $data['name'];
         if($result){
-            return $data['client_id'];
+            return $client;
         }
         return 0;
     }

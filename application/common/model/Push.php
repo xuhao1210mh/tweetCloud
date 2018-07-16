@@ -35,4 +35,22 @@ class Push extends Model{
         return 0;
     }
 
+    //获取状态为2的直推信息
+    public function getPushInfo(){
+        $result = Db::table('push')->field('name,number')->where("status=2")->order("create_time desc")->select();
+        if($result){
+            return $result;
+        }
+        return 0;
+    }
+
+    //检测客户是否申请过此产品
+    public function checkPhone($product_id, $client_phone){
+        $result = $this->where("product_id='$product_id' and number='$client_phone'")->find();
+        if($result){
+            return 1;
+        }
+        return 0;
+    }
+
 }

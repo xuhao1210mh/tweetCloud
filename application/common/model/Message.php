@@ -11,7 +11,7 @@ class Message extends Model{
 
     //获取系统公告
     public function getMessage($date){
-        $result = $this->where("date='$date'")->order("create_time desc")->select();
+        $result = $this->order("create_time desc")->limit(5)->select();
         if($result){
             return $result;
         }

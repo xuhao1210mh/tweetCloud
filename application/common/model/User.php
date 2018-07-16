@@ -59,7 +59,7 @@ class User extends Model{
     //按佣金进行排序
     public function getSequence(){
         // $result = $this->order("money desc")->select();
-        $result = Db::table('user')->field('uid,name,money')->limit(3)->select();
+        $result = Db::table('user')->field('uid,nickname,money')->order('money desc')->limit(3)->select();
         if($result){
             return $result;
         }

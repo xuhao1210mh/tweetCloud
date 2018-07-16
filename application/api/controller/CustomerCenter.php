@@ -31,10 +31,15 @@ class CustomerCenter extends Base{
             'age' => $_POST['age'],
             'area' => $_POST['area']
         ];
-
-        $client_id = self::addClient($data);
-        if($client_id){
-            $result = self::addPush($product_id, $uid, $client_id);
+        //检测该手机用户是否申请过此产品
+        $count = Model('push')->checkPhone($product_id, $data['phone']);
+        if($count){
+            $this->returnJson(0, '您已申请过此产品');
+        }
+        //创建客户信息，并获取客户id
+        $client = self::addClient($data);
+        if($client){
+            $result = self::addPush($product_id, $uid, $data['client_id'], $data['name'], $data['phone']);
         }
         $this->returnJson(0, '请求失败');
     }
@@ -49,19 +54,18 @@ class CustomerCenter extends Base{
     }
 
     //增加直推信息
-    private function addPush($product_id, $uid, $client_id){
-        $user_info = Model('user')->getUserInfo($uid);
+    private function addPush($product_id, $uid, $client_id, $client_name, $client_phone){
         $product_info = Model('product')->getProductInfo($product_id);
         $data = [
             'push_id' => uniqid('o'),
             'product_id' => $product_id,
             'uid' => $uid,
             'product_name' => $product_info['name'],
-            'name' => $user_info['nickname'],
-            'number' => $user_info['phone'],
+            'name' => $client_name,
+            'number' => $client_phone,
             'client_id' => $client_id,
-            'create_date' => date('Y:m'),
-            'create_time' => date('Y:m:d H:i:s'),
+            'create_date' => date('Y-m'),
+            'create_time' => date('Y-m-d H:i:s'),
             'status' => 1
         ];
         $result = Model('push')->setPush($data);

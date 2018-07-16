@@ -112,7 +112,7 @@
             var formData = new FormData();
             formData.append('file', $('#file')[0].files[0]);
             formData.append('name', $('#name').val());
-            formData.append('cate_id', $('#cate_id option:selected').val());
+            formData.append('cate_id', $('#cate option:selected').val());
             formData.append('url', $('#url').val());
             $.ajax({
                 url: "{:url('/admin/product/productAdd')}",

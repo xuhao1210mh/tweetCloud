@@ -38,27 +38,22 @@ class Product extends Base{
     //添加产品
     public function productAdd(Request $request){
         if($request->isAjax()){
-            //$file = $_FILES['file'];
-            //print_r($_FILES);
-            //exit;
             $file_path = '/files/product/pic/';
-            $file = $request->file('file');
-            $info = $file->move('./' . $file_path);
+            $file = $request->file();
+            foreach($file as $v){
+                $file_info = $v;
+            }
+            $info = $file_info->move('./' . $file_path);
             if($info){
                 $data['pic'] = $file_path . $info->getSaveName();
-                $this->success($data['pic']);
-
+                $data['name'] = $_POST['name'];
+                $data['cate_id'] = $_POST['cate_id'];
+                $data['url'] = $_POST['url'];
+                $data['create_time'] = date("Y:m:d H:i:s");
+                $reult = Model('product')->createProduct($data);
             }else{
                 $this->error($file->getError());
             }
-
-            // $filename = $_FILES['file1']['name'];
-            // $tmpname = $_FILES['file1']['tmp_name'];
-
-            // $dir_name = $_SERVER['DOCUMENT_ROOT'] . '/public/files/pic' . $filename;
-            // if(!move_uploaded_file($tmpname, $dir_name)){
-            //     $this->error('图片上传失败');
-            // }
         }
         return view();
     }
