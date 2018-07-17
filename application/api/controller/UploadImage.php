@@ -19,7 +19,7 @@ class UploadImage extends Base{
         $image = \think\Image::open($file_info);
         $ext =  $image->type();
         $img_path = $file_path . time() . '.' .$ext;
-        $info = $image->thumb(400, 400)->save('.' . $img_path);
+        $info = $image->thumb(150, 150)->save('.' . $img_path);
 
         if($info){
             $img_path = $_SERVER['HTTP_HOST'] . $img_path;
