@@ -18,6 +18,7 @@ class Qrcode extends Model{
         return 0;
     }
 
+    //设置客服二维码
     public function setQrcode($data){
         $result = $this->save([
             'code' => $data['qrcode']
