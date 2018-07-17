@@ -34,7 +34,7 @@ class Product extends Model{
 
     //获取产品详情
     public function getProductInfo($product_id){
-        $result = Db::table('product')->field('product_id,name,pic,rate,payment_method,limit,deadline,condition,note')->find();
+        $result = Db::table('product')->field('product_id,name,pic,rate,payment_method,limit,deadline,condition,note,url')->find();
         if($result){
             return $result;
         }
