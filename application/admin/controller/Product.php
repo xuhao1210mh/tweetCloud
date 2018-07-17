@@ -50,7 +50,7 @@ class Product extends Base{
             $img_path = $file_path . time() . '.' .$ext;
             $info = $image->thumb(400, 400)->save('.' . $img_path);
 
-            $img_path = $_SERVER['HTTP_ORIGIN'] . $img_path;
+            $img_path = $_SERVER['HTTP_HOST'] . $img_path;
 
             if($info){
                 $data = [
@@ -109,7 +109,7 @@ class Product extends Base{
             $img_path = $file_path . time() . '.' .$ext;
             $info = $image->thumb(400, 400)->save('.' . $img_path);
 
-            $img_path = $_SERVER['HTTP_ORIGIN'] . $img_path;
+            $img_path = $_SERVER['HTTP_HOST'] . $img_path;
 
             if($info){
                 $data = [
