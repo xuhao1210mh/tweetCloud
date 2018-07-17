@@ -34,7 +34,7 @@ class User extends Base{
                 'level' => 1,
                 'money' => 0,
                 'create_time' => date('Y-m-d H:i:s'),
-                'status' => 1
+                'status' => '一'
             ];
             $result = Model('user')->postUser($data);
             if($result == 1){

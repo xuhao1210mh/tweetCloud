@@ -13,7 +13,7 @@ class Push extends Model{
     public function getPush($uid, $date = '', $status = ''){
         //$result = $this->where("uid='$uid' and create_date='$date'")->select();
         if($status == 2){
-            $result = Db::query("select push_id,product_id,product_name,money,put_time from push where uid='$uid' and status='$status' order by put_time");
+            $result = Db::query("select push_id,product_name,money,put_time from push where uid='$uid' and status='$status' order by put_time");
             if($result){
                 return $result;
             }
@@ -29,15 +29,6 @@ class Push extends Model{
     //创建直推表信息
     public function setPush($data){
         $result = $this->save($data);
-        if($result){
-            return $result;
-        }
-        return 0;
-    }
-
-    //获取状态为2的直推信息
-    public function getPushInfo(){
-        $result = Db::table('push')->field('name,number')->where("status=2")->order("create_time desc")->select();
         if($result){
             return $result;
         }

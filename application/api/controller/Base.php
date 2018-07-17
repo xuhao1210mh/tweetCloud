@@ -14,7 +14,7 @@ class Base extends Controller{
 
     //检测header头里的token
     public function checkToken(){
-        $token = $_SERVER['HTTP_TOKEN'];
+        $token = $_POST['token'];
         $redis = self::redisConnect();
         $uid = $redis->get($token);
         if(empty($uid)){

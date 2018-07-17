@@ -18,4 +18,14 @@ class Qrcode extends Model{
         return 0;
     }
 
+    public function setQrcode($data){
+        $result = $this->save([
+            'code' => $data['qrcode']
+        ],['id' => 1]);
+        if($result){
+            return 1;
+        }
+        return 0;
+    }
+
 }

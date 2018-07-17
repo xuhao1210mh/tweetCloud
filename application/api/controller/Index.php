@@ -53,7 +53,7 @@ class Index extends Base{
 
     //获取产品详情
     public function productInfo(){
-        $token = $this->checkToken();
+        //$token = $this->checkToken();
         $product_id = $_POST['product_id'];
         $result = Model('product')->getProductInfo($product_id);
         if($result){
@@ -65,8 +65,8 @@ class Index extends Base{
     //获取客服微信号
     public function wechat(){
         $wechat_number = Model('setting')->getWechat();
-        if($wechat){
-            $this->returnJson(1, '请求成功', $wechat);
+        if($wechat_number){
+            $this->returnJson(1, '请求成功', $wechat_number);
         }
         $this->returnJson(0, '请求失败');
     }

@@ -7,6 +7,16 @@ use \app\api\controller\Base;
 
 class User extends Base{
 
+    //判断登录状态
+    public function checkLogin(){
+        $token = $this->checkToken();
+        $redis = $this->redisConnect();
+        $uid = $redis->get($token);
+        if($uid){
+            $this->returnJson(1, '已登陆');
+        }
+    }
+
     //登陆
     public function login(){
         //获取前端传递数据

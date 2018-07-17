@@ -21,7 +21,9 @@ class PersonalCenter extends Base{
 
     //收入记录
     public function revenue(){
-        $uid = $_POST['uid'];
+        $token = $this->checkToken();
+        $redis = $this->redisConnect();
+        $uid = $redis->get($token);
         $result = Model('push')->getPush($uid, '', 2);
         if($result){
             $this->returnJson(1, '请求成功', $result);
@@ -31,7 +33,9 @@ class PersonalCenter extends Base{
 
     //提现记录
     public function withdraw(){
-
+        $token = $this->checkToken();
+        $redis = $this->redisConnect();
+        $uid = $redis->get($token);
     }
 
     //专属客服

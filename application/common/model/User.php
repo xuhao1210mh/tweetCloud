@@ -68,7 +68,7 @@ class User extends Model{
 
     //获取用户信息(个人中心)
     public function getUserInfo($uid){
-        $result = Db::table('user')->field('uid,phone,nickname,level,head')->where("uid='$uid'")->find();
+        $result = Db::table('user')->field('uid,phone,nickname,level,head,money')->where("uid='$uid'")->find();
         //$result = Db::query("select uid,phone,nickname,money,level,head from user where uid='$uid'");
         if($result){
             return $result;
