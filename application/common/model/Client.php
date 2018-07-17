@@ -9,8 +9,9 @@ class Client extends Model{
     protected $table = 'client';
 
     //$id为订单编号
-    public function getClient($id){
-
+    public function getClient($client_id){
+        $result = $this->where("client_id='$client_id'")->find();
+        return $result;
     }
 
     public function postClient($data){

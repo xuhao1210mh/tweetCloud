@@ -26,6 +26,15 @@ class Push extends Model{
         return 0;
     }
 
+    public function getAllPush($push_id = ''){
+        if($push_id == ''){
+            $result = $this->where("status=1")->select();
+            return $result;
+        }
+        $result = $this->where("status=1 and push_id='$push_id'")->select();
+        return $result;
+    }
+
     //创建直推表信息
     public function setPush($data){
         $result = $this->save($data);

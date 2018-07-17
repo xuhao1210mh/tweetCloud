@@ -33,13 +33,13 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so layui-form-pane">
-          <input class="layui-input" placeholder="分类名" name="product_id">
+          <input class="layui-input" placeholder="分类名" name="push_id">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon"></i>搜索</button>
         </form>
       </div>
       <xblock>
           <!-- <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button> -->
-          <button class="layui-btn" onclick="x_admin_show('添加产品','productAdd',700,700)"><i class="layui-icon"></i>添加</button>
+          <!-- <button class="layui-btn" onclick="x_admin_show('添加产品','productAdd',700,700)"><i class="layui-icon"></i>添加</button> -->
           <!-- <span class="x-right" style="line-height:40px">共有数据：88 条</span> -->
         </xblock>
       <table class="layui-table">
@@ -48,12 +48,13 @@
             <th>
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
-            <th>ID</th>
-            <th>图片</th>
+            <th style="display: none;">客户ID</th>
+            <th>申请单号</th>
             <th>产品名</th>
-            <th>分类</th>
-            <th>链接</th>
-            <th>创建时间</th>
+            <th>申请人姓名</th>
+            <th>电话</th>
+            <th>申请时间</th>
+            <th>状态</th>
             <th>操作</th>
         </thead>
         <tbody>
@@ -62,25 +63,26 @@
               <td>
                 <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
               </td>
-              <td>{$val.product_id}</td>
-              <!-- <td><img src="{$val.pic}" /></td> -->
-              <td><img src="{$val.pic}" alt=""></td>
+              <td style="display: none">{$val.client_id}</td>
+              <td>{$val.push_id}</td>
+              <td>{$val.product_name}</td>
               <td>{$val.name}</td>
-              <td>
-                {switch $val.cate_id}
-                  {case 1}信用卡{/case}
-                  {case 2}证券{/case}
-                  {case 3}贷款{/case}
-                {/switch}
-              </td>
-              <td>{$val.url}</td>
+              <td>{$val.number}</td>
               <td>{$val.create_time}</td>
+              <td class="td-status">
+                  <span class="layui-btn layui-btn-warm layui-btn-mini">
+                    待审核
+                  </span>
+              </td>
               <td class="td-manage">
-                <a title="编辑"  onclick="x_admin_show('编辑','productEdit?product_id={$val.product_id}',700,700)" href="javascript:;">
-                  <i class="layui-icon">&#xe642;</i>
+                <a title="查看申请人信息"  onclick="x_admin_show('查看申请人信息','pushCheck?client_id={$val.client_id}',500,500)" href="javascript:;">
+                    <i class="iconfont">&#xe6a2;</i>
                 </a>
-                <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-                  <i class="layui-icon">&#xe640;</i>
+                <a title="通过"  onclick="yes(this, '{$val.push_id}')" href="javascript:;">
+                    <i class="iconfont">&#xe6b1;</i>
+                </a>
+                <a title="驳回" onclick="no(this, '{$val.push_id}')" href="javascript:;">
+                    <i class="iconfont">&#xe6b7;</i>
                 </a>
               </td>
             </tr>
@@ -139,7 +141,15 @@
       }
 
       /*用户-删除*/
-      function member_del(obj,id){
+      function yes(obj,id){
+          layer.confirm('确认要删除吗？',function(index){
+              //发异步删除数据
+              $(obj).parents("tr").remove();
+              layer.msg('已删除!',{icon:1,time:1000});
+          });
+      }
+
+      function yes(obj,id){
           layer.confirm('确认要删除吗？',function(index){
               //发异步删除数据
               $(obj).parents("tr").remove();

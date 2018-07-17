@@ -12,7 +12,7 @@ class User extends Model{
 
     //获取用户
     public function getUser($phone = ''){
-        if($phone){
+        if(!empty($phone)){
             $result = $this->where("status=1 and phone='$phone'")->select();
             return $result;
         }

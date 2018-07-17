@@ -143,4 +143,6 @@ return [
     // 异常处理handle类 留空使用 \think\exception\Handle
     'exception_handle'       => '',
 
+    //'exception_ignore_type' => E_WARNING|E_USER_WARNING|E_NOTICE|E_USER_NOTICE,
+
 ];

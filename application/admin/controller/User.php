@@ -14,7 +14,7 @@ class User extends Base{
     //展示用户列表
     public function userList(Request $request){
         $phone = $_GET['phone'];
-        if(empty($phone)){
+        if(!empty($phone)){
             $result = Model('user')->getUser($phone);
             $this->assign('result', $result);
         }else{
