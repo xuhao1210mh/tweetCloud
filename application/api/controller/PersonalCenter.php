@@ -58,11 +58,31 @@ class PersonalCenter extends Base{
         $token = $this->checkToken();
         $redis = $this->redisConnect();
         $uid = $redis->get($token);
+
         $money = $_POST['money'];
+        //选择支付/提现方式。1：支付宝；2：微信；3：银行卡。
         $type = $_POST['type'];
 
-        $result = Model('user')->getMoney($uid);
+        $user_money = Model('user')->getMoney($uid);
+        if($money > $user_money){
+            $this->returnJson(0, '余额不足');
+        }
 
+        if($type == 1){
+            $info = Model('alipay')->getInfo($uid);
+        }
+        if($type == 2){
+            $info = Model('wechat')->getInfo($uid);
+        }
+        if($type == 3){
+            $info = Model('card')->getInfo($uid);
+        }
+
+        $result = Model('withdraw')->createWithdrawInfo($uid, $money, $info);
+        if($result){
+            $this->returnJson(1, '请求成功');
+        }
+        $this->returnJson(0, '请求失败');
     }
 
 }
