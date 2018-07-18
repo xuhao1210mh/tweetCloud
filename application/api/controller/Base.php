@@ -38,7 +38,7 @@ class Base extends Controller{
             'msg' => $msg,
             'data' => $data
         ];
-        echo json_encode($response);
+        echo json_encode($response, JSON_UNESCAPED_SLASHES);
         exit;
     }
 
