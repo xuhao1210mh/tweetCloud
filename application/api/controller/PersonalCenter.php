@@ -85,4 +85,9 @@ class PersonalCenter extends Base{
         $this->returnJson(0, '请求失败');
     }
 
+    //添加银行卡信息
+    public function addCardInfo(){
+        
+    }
+
 }
