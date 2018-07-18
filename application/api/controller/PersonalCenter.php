@@ -32,10 +32,15 @@ class PersonalCenter extends Base{
     }
 
     //提现记录
-    public function withdraw(){
+    public function withdrawList(){
         $token = $this->checkToken();
         $redis = $this->redisConnect();
         $uid = $redis->get($token);
+        $result = Model('witdraw')->getWithdraw($uid);
+        if($result){
+            $this->returnJson(1, '请求成功', $result);
+        }
+        $this->returnJson(0, '请求失败');
     }
 
     //专属客服
@@ -45,7 +50,7 @@ class PersonalCenter extends Base{
         if($result){
             $this->returnJson(1, '请求成功', $result);
         }
-        return 0;
+        $this->returnJson(0, '请求失败');
     }
 
 }

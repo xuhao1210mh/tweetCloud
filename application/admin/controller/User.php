@@ -31,10 +31,10 @@ class User extends Base{
                 'phone' => $_POST['phone'],
                 'nickname' => $_POST['nickname'],
                 'password' => md5($_POST['password']),
-                'level' => 1,
+                'level' => '一',
                 'money' => 0,
                 'create_time' => date('Y-m-d H:i:s'),
-                'status' => '一'
+                'status' => 1
             ];
             $result = Model('user')->postUser($data);
             if($result == 1){
@@ -54,6 +54,31 @@ class User extends Base{
             $this->success('删除成功');
         }else{
             $this->error('删除失败');
+        }
+    }
+
+    //修改用户信息页面
+    public function userEdit(Request $request){
+        $uid = $_GET['uid'];
+        $user_info = Model('user')->getAllUserInfo($uid);
+        $this->assign('result', $user_info);
+        return view();
+    }
+
+    //修改用户信息
+    public function userEditInfo(Request $request){
+        if($request->isAjax()){
+            $uid = $_POST['uid'];
+            $data = [
+                'phone' => $_POST['phone'],
+                'nickname' => $_POST['nickname'],
+                'password' => md5($_POST['password'])
+            ];
+            $result = Model('user')->editUser($uid, $data);
+            if($result){
+                $this->success('修改成功');
+            }
+            $this->error('修改失败');
         }
     }
 

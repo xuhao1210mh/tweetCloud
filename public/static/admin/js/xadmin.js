@@ -193,6 +193,7 @@ function x_admin_show(title,url,w,h){
 
 /*关闭弹出框口*/
 function x_admin_close(){
+    //window.parent.location.reload(); //刷新父页面
     var index = parent.layer.getFrameIndex(window.name);
     parent.layer.close(index);
 }

@@ -18,73 +18,63 @@
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
       <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <style>
-    input{
-        pointer-events: none;
-    }
-    </style>
   </head>
   
   <body>
     <div class="x-body">
         <form class="layui-form">
-            <div class="layui-form-item">
-                <label for="phone" class="layui-form-label">
-                    <span class="x-red">*</span>申请单号
-                </label>
-                <div class="layui-input-inline">
-                    <input type="text" id="phone" name="phone" required="" lay-verify="phone"
-                    autocomplete="off" class="layui-input" readonly value="{$result[0]['push_id']}">
-                </div>
-                <div class="layui-form-mid layui-word-aux">
-          
-                </div>
-            </div>            
+            <input type="hidden" id="uid" value="{$result.uid}">
           <div class="layui-form-item">
               <label for="phone" class="layui-form-label">
-                  <span class="x-red">*</span>申请人姓名
+                  <span class="x-red">*</span>手机
               </label>
               <div class="layui-input-inline">
                   <input type="text" id="phone" name="phone" required="" lay-verify="phone"
-                  autocomplete="off" class="layui-input" readonly value="{$client['name']}">
+                  autocomplete="off" class="layui-input" value="{$result.phone}">
               </div>
               <div class="layui-form-mid layui-word-aux">
-
+                 将会成为您唯一的登入名
               </div>
           </div>
           <div class="layui-form-item">
                 <label for="username" class="layui-form-label">
-                    <span class="x-red">*</span>申请人电话
+                    <span class="x-red">*</span>昵称(姓名)
                 </label>
                 <div class="layui-input-inline">
                     <input type="text" id="nickname" name="username" required="" lay-verify="required"
-                    autocomplete="off" class="layui-input" readonly value="{$client['phone']}">
+                    autocomplete="off" class="layui-input" value="{$result.nickname}">
                 </div>
                 <div class="layui-form-mid layui-word-aux">
+
                 </div>
         </div>
           <div class="layui-form-item">
               <label for="L_pass" class="layui-form-label">
-                  <span class="x-red">*</span>年龄
+                  <span class="x-red">*</span>密码
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_pass" name="pass" required="" lay-verify="pass"
-                  autocomplete="off" class="layui-input" readonly value="{$client['age']}">
+                  <input type="password" id="L_pass" name="pass" required="" lay-verify="pass"
+                  autocomplete="off" class="layui-input">
               </div>
               <div class="layui-form-mid layui-word-aux">
+                  6到16个字符
               </div>
           </div>
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
-                  <span class="x-red">*</span>地址
+                  <span class="x-red">*</span>确认密码
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_repass" name="repass" required="" lay-verify="repass"
-                  autocomplete="off" class="layui-input" readonly value="{$client['area']}">
+                  <input type="password" id="L_repass" name="repass" required="" lay-verify="repass"
+                  autocomplete="off" class="layui-input">
               </div>
           </div>
           <div class="layui-form-item">
- 
+              <label for="L_repass" class="layui-form-label">
+              </label>
+              <button  class="layui-btn" lay-filter="add" lay-submit="">
+                  修改
+              </button>
           </div>
       </form>
     </div>
@@ -114,24 +104,26 @@
             console.log(data);
             //发异步，把数据提交给php
             $.ajax({
-                url: "{:url('/admin/user/userAdd')}",
+                url: "{:url('/admin/user/userEditInfo')}",
                 type: "post",
                 dataType: "json",
                 data: {
+                    uid: $('#uid').val(),
                     phone: $('#phone').val(),
                     nickname: $('#nickname').val(),
                     password: $('#L_pass').val()
                 },
                 success: function(res){
                     if(res.code == 1){
-                        layer.alert("添加用户成功", {icon: 6},function () {
+                        layer.alert("修改成功", {icon: 6},function () {
+                            window.parent.location.reload();
                             // 获得frame索引
                             var index = parent.layer.getFrameIndex(window.name);
                             //关闭当前frame
                             parent.layer.close(index);
                         });
                     }else{
-                        layer.alert("增加用户失败", {icon: 5},function () {
+                        layer.alert("修改失败", {icon: 5},function () {
                             // 获得frame索引
                             var index = parent.layer.getFrameIndex(window.name);
                             //关闭当前frame

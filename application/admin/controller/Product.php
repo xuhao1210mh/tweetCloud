@@ -48,9 +48,9 @@ class Product extends Base{
             $image = \think\Image::open($file_info);
             $ext =  $image->type();
             $img_path = $file_path . time() . '.' .$ext;
-            $info = $image->thumb(400, 400)->save('.' . $img_path);
+            $info = $image->thumb(123, 123)->save('.' . $img_path);
 
-            $img_path = $_SERVER['HTTP_HOST'] . $img_path;
+            $img_path = 'http://' . $_SERVER['HTTP_HOST'] . $img_path;
 
             if($info){
                 $data = [
@@ -70,7 +70,7 @@ class Product extends Base{
                     'create_time' => date("Y-m-d H:i:s"),
                     'status' => 1,
                 ];
-                $result = Model('product')->createProduct($data);
+                $result = Model('product')->createProduct('', $data);
                 if($result){
                     $this->success('添加成功');
                 }else{
@@ -107,9 +107,9 @@ class Product extends Base{
             $image = \think\Image::open($file_info);
             $ext =  $image->type();
             $img_path = $file_path . time() . '.' .$ext;
-            $info = $image->thumb(400, 400)->save('.' . $img_path);
+            $info = $image->thumb(123, 123)->save('.' . $img_path);
 
-            $img_path = $_SERVER['HTTP_HOST'] . $img_path;
+            $img_path = 'http://' . $_SERVER['HTTP_HOST'] . $img_path;
 
             if($info){
                 $data = [

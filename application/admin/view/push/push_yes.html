@@ -18,11 +18,7 @@
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
       <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <style>
-    input{
-        pointer-events: none;
-    }
-    </style>
+
   </head>
   
   <body>
@@ -33,20 +29,32 @@
                     <span class="x-red">*</span>申请单号
                 </label>
                 <div class="layui-input-inline">
-                    <input type="text" id="phone" name="phone" required="" lay-verify="phone"
-                    autocomplete="off" class="layui-input" readonly value="{$result[0]['push_id']}">
+                    <input type="text" id="push_id" name="phone" required="" lay-verify=""
+                    autocomplete="off" class="layui-input" readonly value="{$push_id}">
                 </div>
                 <div class="layui-form-mid layui-word-aux">
           
                 </div>
-            </div>            
+            </div>    
+            <div class="layui-form-item">
+                <label for="phone" class="layui-form-label">
+                    <span class="x-red">*</span>代理人ID
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="uid" name="uid" required="" lay-verify=""
+                    autocomplete="off" class="layui-input" readonly value="{$result['uid']}">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+  
+                </div>
+            </div>        
           <div class="layui-form-item">
               <label for="phone" class="layui-form-label">
-                  <span class="x-red">*</span>申请人姓名
+                  <span class="x-red">*</span>代理人昵称
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="phone" name="phone" required="" lay-verify="phone"
-                  autocomplete="off" class="layui-input" readonly value="{$client['name']}">
+                  <input type="text" id="nickname" name="phone" required="" lay-verify=""
+                  autocomplete="off" class="layui-input" readonly value="{$result['nickname']}">
               </div>
               <div class="layui-form-mid layui-word-aux">
 
@@ -54,38 +62,31 @@
           </div>
           <div class="layui-form-item">
                 <label for="username" class="layui-form-label">
-                    <span class="x-red">*</span>申请人电话
+                    <span class="x-red">*</span>代理人电话
                 </label>
                 <div class="layui-input-inline">
-                    <input type="text" id="nickname" name="username" required="" lay-verify="required"
-                    autocomplete="off" class="layui-input" readonly value="{$client['phone']}">
+                    <input type="text" id="phone" name="username" required="" lay-verify=""
+                    autocomplete="off" class="layui-input" readonly value="{$result['phone']}">
                 </div>
                 <div class="layui-form-mid layui-word-aux">
                 </div>
         </div>
           <div class="layui-form-item">
-              <label for="L_pass" class="layui-form-label">
-                  <span class="x-red">*</span>年龄
-              </label>
-              <div class="layui-input-inline">
-                  <input type="text" id="L_pass" name="pass" required="" lay-verify="pass"
-                  autocomplete="off" class="layui-input" readonly value="{$client['age']}">
-              </div>
-              <div class="layui-form-mid layui-word-aux">
-              </div>
-          </div>
-          <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
-                  <span class="x-red">*</span>地址
+                  <span class="x-red">*</span>佣金
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_repass" name="repass" required="" lay-verify="repass"
-                  autocomplete="off" class="layui-input" readonly value="{$client['area']}">
+                  <input type="text" id="money" name="repass" required="" lay-verify="required"
+                  autocomplete="off" class="layui-input" placeholder="请输入代理人所获佣金">
               </div>
           </div>
           <div class="layui-form-item">
- 
-          </div>
+            <label for="L_repass" class="layui-form-label">
+            </label>
+            <button  class="layui-btn" lay-filter="add" lay-submit="">
+                确认
+            </button>
+        </div>
       </form>
     </div>
     <script>
@@ -114,24 +115,25 @@
             console.log(data);
             //发异步，把数据提交给php
             $.ajax({
-                url: "{:url('/admin/user/userAdd')}",
+                url: "{:url('/admin/push/money')}",
                 type: "post",
                 dataType: "json",
                 data: {
-                    phone: $('#phone').val(),
-                    nickname: $('#nickname').val(),
-                    password: $('#L_pass').val()
+                    push_id: $('#push_id').val(),
+                    uid: $('#uid').val(),
+                    money: $('#money').val()
                 },
                 success: function(res){
                     if(res.code == 1){
-                        layer.alert("添加用户成功", {icon: 6},function () {
+                        layer.alert(res.msg, {icon: 6},function () {
+                            window.parent.location.reload();
                             // 获得frame索引
                             var index = parent.layer.getFrameIndex(window.name);
                             //关闭当前frame
                             parent.layer.close(index);
                         });
                     }else{
-                        layer.alert("增加用户失败", {icon: 5},function () {
+                        layer.alert(res.msg, {icon: 5},function () {
                             // 获得frame索引
                             var index = parent.layer.getFrameIndex(window.name);
                             //关闭当前frame

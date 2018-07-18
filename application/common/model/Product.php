@@ -60,7 +60,6 @@ class Product extends Model{
             }
             return 0;
         }
-        //$result = $this->where("product_id='$product_id'")->save($data);
         $result = $this->save([
             'pic' => $data['pic'],
             'name' => $data['name'],

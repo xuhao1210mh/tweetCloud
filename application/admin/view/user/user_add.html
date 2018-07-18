@@ -114,6 +114,7 @@
                 success: function(res){
                     if(res.code == 1){
                         layer.alert("添加用户成功", {icon: 6},function () {
+                            window.parent.location.reload();
                             // 获得frame索引
                             var index = parent.layer.getFrameIndex(window.name);
                             //关闭当前frame

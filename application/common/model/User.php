@@ -34,6 +34,27 @@ class User extends Model{
         return 0;
     }
 
+    //修改用户信息
+    public function editUser($uid, $data){
+        $phone = $data['phone'];
+        $old_phone = $this->where("uid='$uid'")->value('phone');
+        if($phone != $old_phone){
+            $result = $this->where("phone='$phone'")->find();
+            if($result){
+                return 0;
+            }
+        }
+        $result = $this->save([
+            'phone' => $data['phone'],
+            'nickname' => $data['nickname'],
+            'password' => $data['password']
+        ], ['uid' => $uid]);
+        if($result){
+            return 1;
+        }
+        return 0;
+    }
+
     //删除用户
     public function deleteUser($uid){
         $result = $this->where("uid=$uid")->delete();
@@ -72,6 +93,34 @@ class User extends Model{
         //$result = Db::query("select uid,phone,nickname,money,level,head from user where uid='$uid'");
         if($result){
             return $result;
+        }
+        return 0;
+    }
+
+    //设置用户所获佣金
+    public function setMoney($uid, $money){
+        $result = Db::execute("update user set money=money+$money where uid=$uid");
+        if($result){
+            return 1;
+        }
+        return 0;
+    }
+
+    public function getAllUserInfo($uid){
+        $result = $this->where("uid='$uid'")->find();
+        if($result){
+            return $result;
+        }
+        return 0;
+    }
+
+    //设置头像
+    public function saveHead($uid, $img_path){
+        $result = $this->save([
+            'head' => $img_path,
+        ], ['uid' => $uid]);
+        if($result){
+            return 1;
         }
         return 0;
     }

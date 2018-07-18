@@ -76,12 +76,14 @@
               <td>{$val.url}</td>
               <td>{$val.create_time}</td>
               <td class="td-manage">
-                <a title="编辑"  onclick="x_admin_show('编辑','productEdit?product_id={$val.product_id}',700,700)" href="javascript:;">
+                <!-- <a title="编辑"  onclick="x_admin_show('编辑','productEdit?product_id={$val.product_id}',700,700)" href="javascript:;">
                   <i class="layui-icon">&#xe642;</i>
-                </a>
-                <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+                </a> -->
+                <button class="layui-btn-normal layui-btn layui-btn-xs" onclick="x_admin_show('编辑','productEdit?product_id={$val.product_id}',700,700)" href="javascript:;" ><i class="iconfont">&#xe69e;</i>修改</button>
+                <!-- <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
                   <i class="layui-icon">&#xe640;</i>
-                </a>
+                </a> -->
+                <button class="layui-btn-danger layui-btn layui-btn-xs" onclick="member_del(this,'要删除的id')" href="javascript:;" ><i class="layui-icon">&#xe640;</i>删除</button>
               </td>
             </tr>
           {/volist}
