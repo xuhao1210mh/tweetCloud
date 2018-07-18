@@ -53,4 +53,16 @@ class PersonalCenter extends Base{
         $this->returnJson(0, '请求失败');
     }
 
+    //申请提现
+    public function withdraw(){
+        $token = $this->checkToken();
+        $redis = $this->redisConnect();
+        $uid = $redis->get($token);
+        $money = $_POST['money'];
+        $type = $_POST['type'];
+
+        $result = Model('user')->getMoney($uid);
+
+    }
+
 }

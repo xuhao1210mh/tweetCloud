@@ -125,4 +125,13 @@ class User extends Model{
         return 0;
     }
 
+    //获取佣金金额
+    public function getMoney($uid){
+        $money = $this->where("uid='$uid'")->value('money');
+        if($money){
+            return $money;
+        }
+        return 0;
+    }
+
 }
