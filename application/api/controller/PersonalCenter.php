@@ -68,17 +68,28 @@ class PersonalCenter extends Base{
             $this->returnJson(0, '余额不足');
         }
 
+        //info表示提现账号信息
         if($type == 1){
             $info = Model('alipay')->getInfo($uid);
+            $type = '支付宝';
         }
         if($type == 2){
             $info = Model('wechat')->getInfo($uid);
+            $type = '微信';
         }
         if($type == 3){
             $info = Model('card')->getInfo($uid);
+            $type = '银行卡';
         }
 
-        $result = Model('withdraw')->createWithdrawInfo($uid, $money, $info);
+        $data = [
+            'uid' => $uid,
+            'id' => uniqid('w'),
+            'sum' => $money,
+            'account' => $info['account'],
+            'type' => $type
+        ];
+        $result = Model('withdraw')->createWithdrawInfo($data);
         if($result){
             $this->returnJson(1, '请求成功');
         }
