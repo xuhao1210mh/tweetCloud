@@ -26,4 +26,26 @@ class Payment extends Base{
         echo $data;
     }
 
+    //保存/添加银行卡信息
+    public function saveCardInfo(){
+        $token = $this->checkToken();
+        $redis = $this->redisConnect();
+        $uid = $redis->get($token);
+
+        $data = [
+            'uid' => $_POST['uid'],
+            'name' => $_POST['name'],
+            'card' => $_POST['card'],
+            'type' => $_POST['type'],
+            'phone' => $_POST['phone'],
+            'create_time' => date('Y:m:d H:i:s')
+        ];
+
+        $result = Model('cardpay')->setCardInfo($data);
+        if($result){
+            $this->returnJson(1, '添加银行卡成功');
+        }
+        $this->returnJson(0, '添加银行卡失败');
+    }
+
 }
