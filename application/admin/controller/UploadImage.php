@@ -6,6 +6,7 @@ use \app\api\controller\Base;
 
 class UploadImage extends Base{
 
+    //图片上传
     public function upload(){
         $file_path = '/files/user/head/';
         $file = $request->file();

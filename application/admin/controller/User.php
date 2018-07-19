@@ -37,8 +37,10 @@ class User extends Base{
                 'status' => 1
             ];
             $result = Model('user')->postUser($data);
-            if($result == 1){
-                $this->success('增加成功');
+            if($result){
+                $filename = $result[0]['LAST_INSERT_ID()'];
+                $this->createFile($filename);
+                $this->success($result);
             }else{
                 $this->error('增加失败');
             }
@@ -84,9 +86,9 @@ class User extends Base{
 
     //创建用户文件夹
     public function createFile($filename){
-        $heads = 'files/' . $filename . '/heads';
-        if(!is_dir($heads)){
-            mkdir($heads, 0777, true);
+        $file_path = 'files/user/' . $filename;
+        if(!is_dir($file_path)){
+            mkdir($file_path, 0777, true);
         }
     }
 }

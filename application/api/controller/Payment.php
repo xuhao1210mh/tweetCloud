@@ -7,6 +7,35 @@ use \think\Request;
 
 class Payment extends Base{
 
+    //展示用户银行卡信息
+    public function showCardinfo(){
+        $token = $this->checkToken();
+        $redis = $this->redisConnect();
+        $uid = $redis->get($token);
+
+        $result = Model('cardpay')->getCardInfo($uid);
+        if($result){
+            //print_r($result);
+            $this->returnJson(1, '请求成功', $result);
+            exit;
+        }
+        $this->returnJson(0, '请求失败');
+    }
+
+    //输出持卡人信息
+    public function getUserInfo(){
+        $token = $this->checkToken();
+        $redis = $this->redisConnect();
+        $uid = $redis->get($token);
+
+        $result = Model('user')->getUserInfo($uid);
+        if($result){
+            $data = array_slice($result, 1, 2);
+            $this->returnJson(1, '请求成功', $data);
+        }
+        $this->returnJson(0, '请求失败');
+    }
+
     //验证银行卡信息
     public function checkCardInfo(){
         $card = $_POST['card'];
@@ -36,9 +65,9 @@ class Payment extends Base{
             'uid' => $uid,
             'name' => $_POST['name'],
             'account' => $_POST['account'],
-            'type' => $_POST['type'],
+            'type' => $_POST['type'] . $_POST['cardtype'],
             'phone' => $_POST['phone'],
-            'create_time' => date('Y:m:d H:i:s')
+            'create_time' => date('Y-m-d H:i:s')
         ];
 
         $result = Model('cardpay')->setCardInfo($data);
@@ -60,10 +89,12 @@ class Payment extends Base{
         //选择支付/提现方式。1：支付宝；2：微信；3：银行卡。
         $type = $_POST['type'];
 
-        $times = Model('setting')->getTimes();
+        //系统设定提现次数
+        $time = Model('setting')->getTimes();
+        //当日提现次数
         $withdraw_time = Model('withdraw')->getTimes($uid, $date);
         $withdraw_time = $withdraw_time[0]['count(*)'];
-        if($withdraw_time >= $times){
+        if($withdraw_time >= $time){
             $this->returnJson(0, '您今日的提现次数已超上限');
         }
 
@@ -88,7 +119,8 @@ class Payment extends Base{
             $type = '微信';
         }
         if($type == 3){
-            $info = Model('cardpay')->getInfo($uid);
+            $id = $_POST['id'];
+            $info = Model('cardpay')->getInfo($id, $uid);
             if(!$info){
                 $this->returnJson(0, '请完善提现账户信息');
             }
@@ -100,19 +132,21 @@ class Payment extends Base{
             'uid' => $uid,
             'sum' => $money,
             'account' => $info['account'],
-            'type' => $type,
+            'type' => $info['type'],
             'create_date' => date('Y-m-d'),
             'create_time' => date('H:i:s'),
             'status' => 1
         ];
         $result = Model('withdraw')->createWithdrawInfo($data);
         if($result){
+            //print_r($data);exit;
             $result = Model('user')->deductMoney($uid, $money);
             if($result){
                 $this->returnJson(1, '申请提现成功');
             }
             $this->returnJson(0, '申请提现失败');
         }
+        exit;
         $this->returnJson(0, '申请提现失败');
     }
 

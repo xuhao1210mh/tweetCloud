@@ -29,7 +29,7 @@ class User extends Model{
         }
         $result = $this->save($data);
         if($result){
-            return 1;
+            return Db::query("select LAST_INSERT_ID()");
         }
         return 0;
     }

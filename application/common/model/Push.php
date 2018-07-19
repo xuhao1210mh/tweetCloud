@@ -90,7 +90,7 @@ class Push extends Model{
     public function setFail($push_id){
         $result = $this->save([
             'status' => 0,
-            'put_time' => date("Y:m:d H:i:s"),
+            'put_time' => date("Y-m-d H:i:s"),
         ], ['push_id' => $push_id]);
         if($result){
             return 1;
