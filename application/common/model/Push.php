@@ -9,7 +9,7 @@ class Push extends Model{
     //对应表为push表
     protected $table = 'push';
 
-    //
+    //获取直推列表
     public function getPush($uid, $date = '', $status = ''){
         //$result = $this->where("uid='$uid' and create_date='$date'")->select();
         if($status == 2){
@@ -26,6 +26,7 @@ class Push extends Model{
         return 0;
     }
 
+    //获取所有直推信息
     public function getAllPush($push_id = ''){
         if($push_id == ''){
             $result = $this->where("status=1")->order("create_time desc")->select();
@@ -76,7 +77,8 @@ class Push extends Model{
         $result = $this->save([
             'money' => $money,
             'status' => 2,
-            'put_time' => date("Y:m:d H:i:s"),
+            'put_date' => date('Y-m-d'),
+            'put_time' => date('H:i:s')
         ], ['push_id' => $push_id]);
         if($result){
             return 1;

@@ -36,7 +36,7 @@ class PersonalCenter extends Base{
         $token = $this->checkToken();
         $redis = $this->redisConnect();
         $uid = $redis->get($token);
-        $result = Model('witdraw')->getWithdraw($uid);
+        $result = Model('withdraw')->getWithdraw($uid);
         if($result){
             $this->returnJson(1, '请求成功', $result);
         }
@@ -49,49 +49,6 @@ class PersonalCenter extends Base{
         $result = Model('qrcode')->getCustomerService();
         if($result){
             $this->returnJson(1, '请求成功', $result);
-        }
-        $this->returnJson(0, '请求失败');
-    }
-
-    //申请提现
-    public function withdraw(){
-        $token = $this->checkToken();
-        $redis = $this->redisConnect();
-        $uid = $redis->get($token);
-
-        $money = $_POST['money'];
-        //选择支付/提现方式。1：支付宝；2：微信；3：银行卡。
-        $type = $_POST['type'];
-
-        $user_money = Model('user')->getMoney($uid);
-        if($money > $user_money){
-            $this->returnJson(0, '余额不足');
-        }
-
-        //info表示提现账号信息
-        if($type == 1){
-            $info = Model('alipay')->getInfo($uid);
-            $type = '支付宝';
-        }
-        if($type == 2){
-            $info = Model('wechat')->getInfo($uid);
-            $type = '微信';
-        }
-        if($type == 3){
-            $info = Model('card')->getInfo($uid);
-            $type = '银行卡';
-        }
-
-        $data = [
-            'uid' => $uid,
-            'id' => uniqid('w'),
-            'sum' => $money,
-            'account' => $info['account'],
-            'type' => $type
-        ];
-        $result = Model('withdraw')->createWithdrawInfo($data);
-        if($result){
-            $this->returnJson(1, '请求成功');
         }
         $this->returnJson(0, '请求失败');
     }

@@ -134,4 +134,13 @@ class User extends Model{
         return 0;
     }
 
+    //申请提现时扣除余额
+    public function deductMoney($uid, $money){
+        $result = Db::execute("update user set money=money-'$money' where uid='$uid'");
+        if($result){
+            return 1;
+        }
+        return 0;
+    }
+
 }

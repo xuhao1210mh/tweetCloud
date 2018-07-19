@@ -57,7 +57,7 @@ class Push extends Base{
         return view();
     }
 
-    //申请单通过审核
+    //申请单审核页面
     public function pushYes(){
         $push_id = $_GET['push_id'];
         $this->assign('push_id', $push_id);

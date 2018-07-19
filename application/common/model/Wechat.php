@@ -11,7 +11,7 @@ class wechat extends Model{
     public function getInfo($uid){
         $result = $this->where("uid='$uid'")->find();
         if($result){
-            return 1;
+            return $result;
         }
         return 0;
     }

@@ -37,4 +37,12 @@ class Setting extends Model{
         return 0;
     }
 
+    public function getTimes(){
+        $result = $this->where('id=1')->value('time');
+        if($result){
+            return $result;
+        }
+        return 0;
+    }
+
 }
