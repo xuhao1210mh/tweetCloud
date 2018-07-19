@@ -63,16 +63,20 @@
               <td>
                 <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
               </td>
-              <td style="display: none">{$val.id}</td>
+              <td style="display: none">{$val.uid}</td>
               <td>{$val.id}</td>
               <td>{$val.sum}</td>
               <td>{$val.type}</td>
               <td>
-                {switch $val.type}
+                <!-- {switch $val.type}
                   {case 支付宝}查看二维码{/case}
                   {case 微信}查看二维码{/case}
-                  {case 支付宝}$val.account{/case}
-                {/switch}
+                  {case 农业银行}{$val.account}{/case}
+                {/switch} -->
+                {if $val.type == 支付宝 }支付宝二维码
+                  {elseif $val.type == 微信 /}微信二维码
+                  {else /}{$val.account}
+                {/if}
               </td>
               <td>{$val.create_date} {$val.create_time}</td>
               <td class="td-status">
@@ -81,12 +85,12 @@
                   </span>
               </td>
               <td class="td-manage">
-                <button class="layui-btn-normal layui-btn layui-btn-xs" onclick="x_admin_show('查看申请人信息','pushCheck?push_id={}',500,500)" href="javascript:;">
+                <button class="layui-btn-normal layui-btn layui-btn-xs" onclick="x_admin_show('查看申请人信息','withdrawInfo?id={$val.id}&uid={$val.uid}',500,500)" href="javascript:;">
                     <i class="iconfont">&#xe6a2;</i>查看</button>
                 <!-- <button class="layui-btn-green layui-btn layui-btn-xs" onclick="x_admin_show('审核','pushYes?push_id={}',500,500)" href="javascript:;">
                     <i class="iconfont">&#xe6b1;</i>通过</button> -->
-                <!-- <button class="layui-btn-danger layui-btn layui-btn-xs" onclick="no(this, '{}')" href="javascript:;">
-                    <i class="iconfont">&#xe6b7;</i>删除</button> -->
+                <button class="layui-btn-danger layui-btn layui-btn-xs" onclick="no(this, '{}')" href="javascript:;">
+                    <i class="iconfont">&#xe6b7;</i>删除</button>
               </td>
             </tr>
           {/volist}

@@ -20,4 +20,12 @@ class Withdraw extends Base{
         return view();
     }
 
+    public function withdrawInfo(){
+        $id = $_GET['id'];
+        $uid = $_GET['uid'];
+        $user_info = Model('user')->getUserInfo($uid);
+        $this->assign('user_info', $user_info);
+        return view();
+    }
+
 }

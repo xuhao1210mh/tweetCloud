@@ -38,10 +38,10 @@ class Withdraw extends Model{
     //获取所有提现申请单
     public function getAllWithdraw($id = ''){
         if(!empty($id)){
-            $result = $this->where("status=1 and id='$id'")->order('create_date,create_time desc')->select();
+            $result = $this->where("status=1 and id='$id'")->order('create_date desc')->order('create_time desc')->select();
             return $result;
         }
-        $result = $this->where("status=1")->order('create_date,create_time desc')->select();
+        $result = $this->where("status=1")->order('create_date desc')->order('create_time desc')->select();
         return $result;
     }
 
