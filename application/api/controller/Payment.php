@@ -94,6 +94,10 @@ class Payment extends Base{
         //当日提现次数
         $withdraw_time = Model('withdraw')->getTimes($uid, $date);
         $withdraw_time = $withdraw_time[0]['count(*)'];
+        // echo $time;
+        // echo '<br>';
+        // echo $withdraw_time;
+        // exit;
         if($withdraw_time >= $time){
             $this->returnJson(0, '您今日的提现次数已超上限');
         }
@@ -127,13 +131,15 @@ class Payment extends Base{
             $type = '银行卡';
         }
 
+        //echo json_encode($info);
+
         $data = [
             'id' => uniqid('w'),
             'uid' => $uid,
             'sum' => $money,
             'account' => $info['account'],
             'type' => $info['type'],
-            'create_date' => date('Y-m-d'),
+            'create_date' => $date,
             'create_time' => date('H:i:s'),
             'status' => 1
         ];
