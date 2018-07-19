@@ -4,7 +4,7 @@ namespace app\common\model;
 
 use \think\Model;
 
-class Alipay extends Model{
+class wechat extends Model{
     
     protected $table = 'wechat';
 

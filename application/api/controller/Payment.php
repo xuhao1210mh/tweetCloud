@@ -33,7 +33,7 @@ class Payment extends Base{
         $uid = $redis->get($token);
 
         $data = [
-            'uid' => $_POST['uid'],
+            'uid' => $uid,
             'name' => $_POST['name'],
             'card' => $_POST['card'],
             'type' => $_POST['type'],
