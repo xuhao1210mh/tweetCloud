@@ -53,4 +53,12 @@ class Cardpay extends Model{
         return 0;
     }
 
+    public function getInfoByUid($uid){
+        $result = $this->where("uid='$uid'")->find();
+        if($result){
+            return $result;
+        }
+        return 0;
+    }
+
 }

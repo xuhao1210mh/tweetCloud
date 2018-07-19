@@ -45,4 +45,13 @@ class Withdraw extends Model{
         return $result;
     }
 
+    //获取提现信息
+    public function getInfoById($id){
+        $result = $this->where("id='$id'")->find();
+        if($result){
+            return $result;
+        }
+        return 0;
+    }
+
 }
