@@ -22,7 +22,7 @@ class Withdraw extends Model{
     //获取提现记录
     public function getWithdraw($uid){
         // $result = $this->where("uid='$uid'")->select();
-        $result = Db::table('withdraw')->field('sum,type,account,create_date,create_time')->where("uid='$uid'")->select();
+        $result = Db::table('withdraw')->field('sum,type,account,create_date,create_time')->where("uid='$uid'")->order('create_date desc')->order('create_time desc')->select();
         if($result){
             return $result;
         }

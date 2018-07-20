@@ -109,17 +109,19 @@ class Payment extends Base{
 
         //info表示提现账号信息
         if($type == 1){
-            $info = Model('alipay')->getInfo($uid);
+            $info = Model('paycode')->getCode();
             if(!$info){
                 $this->returnJson(0, '请完善提现账户信息');
             }
+            $account = $info['alipaycode'];
             $type = '支付宝';
         }
         if($type == 2){
-            $info = Model('wechat')->getInfo($uid);
+            $info = Model('paycode')->getCode();
             if(!$info){
                 $this->returnJson(0, '请完善提现账户信息');
             }
+            $account = $info['wechatcode'];
             $type = '微信';
         }
         if($type == 3){
@@ -128,7 +130,8 @@ class Payment extends Base{
             if(!$info){
                 $this->returnJson(0, '请完善提现账户信息');
             }
-            $type = '银行卡';
+            $account = $info['account'];
+            $type = $info['type'];
         }
 
         //echo json_encode($info);
@@ -137,8 +140,8 @@ class Payment extends Base{
             'id' => uniqid('w'),
             'uid' => $uid,
             'sum' => $money,
-            'account' => $info['account'],
-            'type' => $info['type'],
+            'account' => $account,
+            'type' => $type,
             'create_date' => $date,
             'create_time' => date('H:i:s'),
             'status' => 1
@@ -148,12 +151,83 @@ class Payment extends Base{
             //print_r($data);exit;
             $result = Model('user')->deductMoney($uid, $money);
             if($result){
-                $this->returnJson(1, '申请提现成功');
+                $this->returnJson(1, '申请提现成功', $account);
             }
             $this->returnJson(0, '申请提现失败');
         }
         exit;
         $this->returnJson(0, '申请提现失败');
+    }
+
+    //支付宝/微信提现
+    public function otherWithdraw(){
+        $token = $this->checkToken();
+        $redis = $this->redisConnect();
+        $uid = $redis->get($token);
+        //获取当前日期
+        $date = $_POST['date'];
+
+        $money = $_POST['money'];
+        //选择支付/提现方式。1：支付宝；2：微信；3：银行卡。
+        $type = $_POST['type'];
+
+        //系统设定提现次数
+        $time = Model('setting')->getTimes();
+        //当日提现次数
+        $withdraw_time = Model('withdraw')->getTimes($uid, $date);
+        $withdraw_time = $withdraw_time[0]['count(*)'];
+        // echo $time;
+        // echo '<br>';
+        // echo $withdraw_time;
+        // exit;
+        if($withdraw_time >= $time){
+            $this->returnJson(0, '您今日的提现次数已超上限');
+        }
+
+        $user_money = Model('user')->getMoney($uid);
+        if($money > $user_money){
+            $this->returnJson(0, '余额不足');
+        }
+
+        if($type == 1){
+            $info = Model('paycode')->getCode();
+            if(!$info){
+                $this->returnJson(0, '请完善提现账户信息');
+            }
+            $paycode = $info['alipaycode'];
+            $type = '支付宝';
+        }
+        if($type == 2){
+            $info = Model('paycode')->getCode();
+            if(!$info){
+                $this->returnJson(0, '请完善提现账户信息');
+            }
+            $paycode = $info['wechatcode'];
+            $type = '微信';
+        }
+
+        $data = [
+            'id' => uniqid('w'),
+            'uid' => $uid,
+            'sum' => $money,
+            'account' => $paycode,
+            'type' => $type,
+            'create_date' => $date,
+            'create_time' => date('H:i:s'),
+            'status' => 1
+        ];
+        $result = Model('withdraw')->createWithdrawInfo($data);
+        if($result){
+            //print_r($data);exit;
+            $result = Model('user')->deductMoney($uid, $money);
+            if($result){
+                $this->returnJson(1, '申请提现成功', $paycode);
+            }
+            $this->returnJson(0, '申请提现失败');
+        }
+        exit;
+        $this->returnJson(0, '申请提现失败');
+
     }
 
 }

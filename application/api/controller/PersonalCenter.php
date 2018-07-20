@@ -28,7 +28,7 @@ class PersonalCenter extends Base{
         if($result){
             $this->returnJson(1, '请求成功', $result);
         }
-        return 0;
+        $this->returnJson(0, '请求失败');
     }
 
     //提现记录
@@ -37,6 +37,14 @@ class PersonalCenter extends Base{
         $redis = $this->redisConnect();
         $uid = $redis->get($token);
         $result = Model('withdraw')->getWithdraw($uid);
+       foreach($result as $key => $v){
+           if($result[$key]['type'] == '支付宝'){
+               $result[$key]['account'] = '支付宝';
+           }
+           if($result[$key]['type'] == '微信'){
+            $result[$key]['account'] = '微信'; 
+           }
+       }
         if($result){
             $this->returnJson(1, '请求成功', $result);
         }

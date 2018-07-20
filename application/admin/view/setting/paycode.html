@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="/static/admin/admin/css/font.css">
+    <link rel="stylesheet" href="/static/admin/css/font.css">
     <link rel="stylesheet" href="/static/admin/css/xadmin.css">
     <script type="text/javascript" src="/static/admin/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
@@ -26,7 +26,7 @@
         <a href="">首页</a>
         <a href="">系统管理</a>
         <a>
-          <cite>平台设置</cite></a>
+          <cite>收款码设置</cite></a>
       </span>
       <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
@@ -43,9 +43,9 @@
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
             <th>ID</th>
-            <th>名字</th>
-            <th>微信号</th>
-            <th>二维码</th>
+            <th>支付宝收款码</th>
+            <th>微信收款码</th>
+            <th>提现次数</th>
             <th>操作</th>
         </thead>
         <tbody>
@@ -53,16 +53,20 @@
               <td>
                 <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='2'><i class="layui-icon">&#xe605;</i></div>
               </td>
-              <td>{$result.id}</td>
-              <td>{$result.name}</td>
-              <td>{$result.wechat}</td>
-              <td><img src="{$qrcode}" /></td>
+              <td>{$paycode.id}</td>
+              <td><img src="{$paycode.alipaycode}" /></td>
+              <td><img src="{$paycode.wechatcode}" /></td>
+              <td>{$times}</td>
               <td class="td-manage">
                 <!-- <a onclick="member_stop(this,'10001')" href="javascript:;"  title="启用">
                   <i class="layui-icon">&#xe601;</i>
                 </a> -->
-                <button class="layui-btn-normal layui-btn layui-btn-xs" onclick="x_admin_show('编辑','settingEdit', 550, 550)" href="javascript:;">
-                    <i class="iconfont">&#xe69e;</i>修改
+                <button class="layui-btn-normal layui-btn layui-btn-xs" onclick="x_admin_show('编辑','paycodeEdit', 500, 500)" href="javascript:;">
+                    <i class="iconfont">&#xe69e;</i>
+                    修改
+                </button>
+                <button class="layui-btn-normal layui-btn layui-btn-xs" onclick="x_admin_show('编辑','timesEdit', 500, 500)" href="javascript:;">
+                    <i class="iconfont">&#xe69e;</i>提现次数
                 </button>
               </td>
           </tr>

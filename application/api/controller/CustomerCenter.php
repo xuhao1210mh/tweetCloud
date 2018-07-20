@@ -23,17 +23,19 @@ class CustomerCenter extends Base{
         $big_date = $year . '-0' . $big_month;
 
         $result = Model('push')->getMonthPush($uid, $date, $small_date, $big_date);
+        $sum = Model('push')->getSum($uid);
+        $sum = $sum[0]['sum'];
         if($result['code'] == 90){
-            $this->returnJson(90, '前一月份有记录，后一月份无记录', $result['data']);
+            $this->returnMoreJson(90, '前一月份有记录，后一月份无记录', $result['data'], $sum);
         }
         if($result['code'] == 100){
-            $this->returnJson(100, '前一月份有记录，后一月份有记录', $result['data']);
+            $this->returnMoreJson(100, '前一月份有记录，后一月份有记录', $result['data'], $sum);
         }
         if($result['code'] == 110){
-            $this->returnJson(110, '前一月份无记录，后一月份有记录', $result['data']);   
+            $this->returnMoreJson(110, '前一月份无记录，后一月份有记录', $result['data'], $sum);   
         }
         if($result['code'] == 120){
-            $this->returnJson(120, '前一月份无记录，后一月份无记录', $result['data']);   
+            $this->returnMoreJson(120, '前一月份无记录，后一月份无记录', $result['data'], $sum);   
         }
         $this->returnJson(0, '请求失败');
     }
@@ -76,7 +78,7 @@ class CustomerCenter extends Base{
     private function addPush($product_id, $uid, $client_id, $client_name, $client_phone){
         $product_info = Model('product')->getProductInfo($product_id);
         $data = [
-            'push_id' => uniqid('o'),
+            'push_id' => substr(uniqid('o'), 0, -3),
             'product_id' => $product_id,
             'uid' => $uid,
             'product_name' => $product_info['name'],
@@ -105,6 +107,23 @@ class CustomerCenter extends Base{
         echo $date . '<br>';
         echo $small_date . '<br>';
         echo $big_date . '<br>';
+        exit;
+    }
+
+    public function returnMoreJson($code, $msg, $data = null, $sum = null){
+        $response = [
+            /**
+             * code = 11时，用户未登陆；
+             * code = 1时，请求成功；
+             * code = 0时，请求失败；
+             * code = 10时，未知错误;
+             */
+            'code' => $code,
+            'msg' => $msg,
+            'data' => $data,
+            'sum' => $sum
+        ];
+        echo json_encode($response, JSON_UNESCAPED_SLASHES);
         exit;
     }
 

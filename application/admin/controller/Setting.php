@@ -27,7 +27,7 @@ class Setting extends Base{
         }
         if($request->isAjax()){
             //上传并生成缩略图
-            $file_path = '/files/setting/pic/';
+            $file_path = 'files/setting/pic/';
             $file = $request->file();
 
             foreach($file as $v){
@@ -37,9 +37,9 @@ class Setting extends Base{
             $image = \think\Image::open($file_info);
             $ext =  $image->type();
             $img_path = $file_path . time() . '.' .$ext;
-            $info = $image->thumb(400, 400)->save('.' . $img_path);
+            $info = $image->thumb(400, 400)->save($img_path);
 
-            $img_path = $_SERVER['HTTP_ORIGIN'] . $img_path;
+            $img_path = 'http://' . $_SERVER['HTTP_HOST'] .'/'. $img_path;
 
             //$this->success($img_path);
 
@@ -51,8 +51,69 @@ class Setting extends Base{
                 'qrcode' => $img_path
             ];
 
-            Model('setting')->setSetting($setting);
-            Model('qrcode')->setQrcode($qrcode);
+            $setting = Model('setting')->setSetting($setting);
+            $qrcode = Model('qrcode')->setQrcode($qrcode);
+            if($setting && $qrcode){
+                $this->success('修改成功');
+            }
+            $this->error('修改失败');
+        }
+        return view();
+    }
+
+    //支付宝/微信收款码
+    public function paycode(){
+        $result = Model('paycode')->getCode();
+        $this->assign('paycode', $result);
+        $times = Model('setting')->getTimes();
+        $this->assign('times', $times);
+        return view();
+    }
+
+    //修改支付宝/微信收款码页面
+    public function paycodeEdit(Request $request){
+        $result = Model('paycode')->getCode();
+        $this->assign('paycode', $result);
+
+        if($request->isAjax()){
+            //上传并生成缩略图
+            $file_path = 'files/setting/pic/';
+            $file = $request->file();
+
+            foreach($file as $v){
+                $file_info = $v;
+
+                $image = \think\Image::open($file_info);
+                $ext =  $image->type();
+                $img_path = $file_path . uniqid('paycode') . '.' .$ext;
+                $info = $image->thumb(313, 313)->save($img_path);
+    
+                $img_paths[] = 'http://' . $_SERVER['HTTP_HOST'] .'/'. $img_path;
+            }
+            
+            //print_r($img_paths);exit;
+            $result = Model('paycode')->setCode($img_paths);
+            if($result){
+                $this->success('修改成功');
+            }else{
+                $this->error('修改失败');
+            };
+        }
+        return view();
+    }
+
+    //修改提现次数
+    public function timesEdit(Request $request){
+        $times = Model('setting')->getTimes();
+        $this->assign('times', $times);
+        if($request->isAjax()){
+            $times = $_POST['times'];
+            $result = Model('setting')->setTimes($times);
+            if($result == 1){
+                $this->success('修改成功');
+            }else{
+                $this->error('修改失败');
+            }
         }
         return view();
     }

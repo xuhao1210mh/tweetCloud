@@ -38,7 +38,7 @@ class Product extends Base{
     //添加产品
     public function productAdd(Request $request){
         if($request->isAjax()){
-            $file_path = '/files/product/pic/';
+            $file_path = 'files/product/pic/';
             $file = $request->file();
 
             foreach($file as $v){
@@ -48,9 +48,9 @@ class Product extends Base{
             $image = \think\Image::open($file_info);
             $ext =  $image->type();
             $img_path = $file_path . time() . '.' .$ext;
-            $info = $image->thumb(123, 123)->save('.' . $img_path);
+            $info = $image->thumb(123, 123)->save($img_path);
 
-            $img_path = 'http://' . $_SERVER['HTTP_HOST'] . $img_path;
+            $img_path = 'http://' . $_SERVER['HTTP_HOST'] .'/'. $img_path;
 
             if($info){
                 $data = [
@@ -138,6 +138,17 @@ class Product extends Base{
             }else{
                 $this->error($file->getError());
             }
+        }
+    }
+
+    //删除产品
+    public function delProduct(){
+        $product_id = $_POST['product_id'];
+        $result = Model('product')->delProduct($product_id);
+        if($result){
+            $this->success('删除成功');
+        }else{
+            $this->error('删除失败');
         }
     }
 

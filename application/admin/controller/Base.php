@@ -7,7 +7,7 @@ use \think\facade\Session;
 
 class Base extends Controller{
 
-    public function _initialize(){
+    public function checkSession(){
         $username = Session::get('username');
         if(empty($username)){
             $this->error('请登陆', '/admin/entry/login');

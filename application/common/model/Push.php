@@ -13,7 +13,7 @@ class Push extends Model{
     public function getPush($uid, $date = '', $status = ''){
         //$result = $this->where("uid='$uid' and create_date='$date'")->select();
         if($status == 2){
-            $result = Db::query("select push_id,product_name,money,put_time from push where uid='$uid' and status='$status' order by put_time desc");
+            $result = Db::query("select push_id,product_name,money,put_date,put_time from push where uid='$uid' and status='$status' order by put_time desc");
             if($result){
                 return $result;
             }
@@ -87,10 +87,12 @@ class Push extends Model{
     }
 
     //设置申请单状态(fail)
-    public function setFail($push_id){
+    public function setFail($push_id, $reason){
         $result = $this->save([
+            'reason' => $reason,
             'status' => 0,
-            'put_time' => date("Y-m-d H:i:s"),
+            'put_date' => date("Y-m-d"),
+            'put_time' => date("H:i:s")
         ], ['push_id' => $push_id]);
         if($result){
             return 1;
@@ -112,7 +114,7 @@ class Push extends Model{
     //获取直推表，当前月份，前后月份
     public function getMonthPush($uid, $date, $small_date, $big_date){
         //当前月份
-        $current_push = Db::query("select push_id,product_id,product_name,name,number,create_time,status from push where uid='$uid' and create_date='$date' order by create_time desc");
+        $current_push = Db::query("select push_id,product_id,product_name,name,number,create_time,reason,status from push where uid='$uid' and create_date='$date' order by create_time desc");
         if($current_push){
             //前一月份
             $former_push = Db::query("select push_id,product_id,product_name,name,number,create_time,status from push where uid='$uid' and create_date='$small_date' order by create_time desc");
@@ -153,6 +155,14 @@ class Push extends Model{
         }else{
             return 0;
         }
+    }
+
+    public function getSum($uid){
+        $result = Db::query("select count(*) as sum from push where uid='$uid'");
+        if($result){
+            return $result;
+        }
+        return 0;
     }
 
 }

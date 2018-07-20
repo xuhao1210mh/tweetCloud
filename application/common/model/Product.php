@@ -44,7 +44,7 @@ class Product extends Model{
     //获取产品列表
     public function getProductList($name = ''){
         if($name){
-            $reuslt = $this->where("name='$name'")->select();
+            $result = $this->where("status=1 and name='$name'")->select();
             return $result;
         }
         $result = $this->where("status=1")->select();
@@ -76,7 +76,7 @@ class Product extends Model{
             'url' => $data['url'],
             'create_time' => date("Y-m-d H:i:s"),
             'status' => 1,
-        ],['product_id' => $product_id]);
+        ], ['product_id' => $product_id]);
         if($result){
             return 1;
         }
@@ -86,6 +86,26 @@ class Product extends Model{
     //获取产品更为详尽的信息
     public function getProductMoreInfo($product_id){
         $result = $this->where("product_id='$product_id'")->find();
+        if($result){
+            return $result;
+        }
+        return 0;
+    }
+
+    //删除产品
+    public function delProduct($product_id){
+        $result = $this->save([
+            'status' => 0
+        ], ['product_id' => $product_id]);
+        if($result){
+            return $result;
+        }
+        return 0;
+    }
+
+    //获取产品名
+    public function getProductName($product_id){
+        $result = $this->where("product_id='$product_id'")->value('name');
         if($result){
             return $result;
         }

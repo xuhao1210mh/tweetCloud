@@ -11,7 +11,7 @@ class Qrcode extends Model{
 
     //获取客服信息
     public function getCustomerService(){
-        $result = $this->where('id=1')->find();
+        $result = $this->where('id=1')->value('code');
         if($result){
             return $result;
         }

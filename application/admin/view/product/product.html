@@ -33,7 +33,7 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so layui-form-pane">
-          <input class="layui-input" placeholder="分类名" name="product_id">
+          <input class="layui-input" placeholder="" name="product_id">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon"></i>搜索</button>
         </form>
       </div>
@@ -83,7 +83,7 @@
                 <!-- <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
                   <i class="layui-icon">&#xe640;</i>
                 </a> -->
-                <button class="layui-btn-danger layui-btn layui-btn-xs" onclick="member_del(this,'要删除的id')" href="javascript:;" ><i class="layui-icon">&#xe640;</i>删除</button>
+                <button class="layui-btn-danger layui-btn layui-btn-xs" onclick="del(this,'{$val.product_id}')" href="javascript:;" ><i class="layui-icon">&#xe640;</i>删除</button>
               </td>
             </tr>
           {/volist}
@@ -141,9 +141,20 @@
       }
 
       /*用户-删除*/
-      function member_del(obj,id){
+      function del(obj,id){
           layer.confirm('确认要删除吗？',function(index){
               //发异步删除数据
+              $.ajax({
+                url: "{:url('/admin/product/delProduct')}",
+                type: "post",
+                dataType: "json",
+                data: {
+                  product_id: id
+                },
+                success: function(res){
+                  
+                }
+              });
               $(obj).parents("tr").remove();
               layer.msg('已删除!',{icon:1,time:1000});
           });

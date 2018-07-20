@@ -26,12 +26,12 @@ class UploadImage extends Base{
 
         $image = \think\Image::open($file_info);
         $ext =  $image->type();
-        $img_path = '/' . $file_path . '/' . uniqid('Usr') . '.' .$ext;
-        $info = $image->thumb(200, 200)->save('.' . $img_path);
+        $img_path = $file_path . '/' . uniqid('Usr') . '.' .$ext;
+        $info = $image->thumb(200, 200)->save($img_path);
 
         if($info){
-            $img_path = 'http://' . $_SERVER['HTTP_HOST'] . $img_path;
-            $this->returnJson(0, '上传成功', $img_path);
+            $img_path = 'http://' . $_SERVER['HTTP_HOST'] .'/'. $img_path;
+            $this->returnJson(1, '上传成功', $img_path);
         }
         $this->returnJson(0, '上传失败');
     }

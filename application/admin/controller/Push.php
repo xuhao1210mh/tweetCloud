@@ -85,4 +85,31 @@ class Push extends Base{
         }
     }
 
+    //驳回原因页面
+    public function pushNo(){
+        $push_id = $_GET['push_id'];
+        $this->assign('push_id', $push_id);
+        $uid = Model('push')->getUid($push_id);
+        $user_info = Model('user')->getUserInfo($uid);
+        $this->assign('result', $user_info);
+        return view();
+    }
+
+    //填写驳回原因
+    public function reason(){
+        $push_id = $_POST['push_id'];
+        $uid = $_POST['uid'];
+        $reason = $_POST['reason'];
+        $result = Model('push')->setFail($push_id, $reason);
+        if($result){
+            if($result){
+                $this->success('已驳回');
+            }else{
+                $this->error('操作失败');
+            }
+        }else{
+            $this->error('操作失败');
+        }
+    }
+
 }

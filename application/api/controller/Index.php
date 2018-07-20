@@ -54,8 +54,10 @@ class Index extends Base{
     //获取产品详情
     public function productInfo(){
         //$token = $this->checkToken();
+        $uid = $_POST['uid'];
         $product_id = $_POST['product_id'];
         $result = Model('product')->getProductInfo($product_id);
+        $result['uid'] = $uid;
         if($result){
             $this->returnJson(1, '成功', $result);
         }

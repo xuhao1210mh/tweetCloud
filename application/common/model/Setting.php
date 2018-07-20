@@ -45,4 +45,14 @@ class Setting extends Model{
         return 0;
     }
 
+    public function setTimes($times){
+        $result = $this->save([
+            'time' => $times
+        ], ['id' => 1]);
+        if($result){
+            return 1;
+        }
+        return 0;
+    }
+
 }
