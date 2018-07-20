@@ -14,7 +14,7 @@ class Setting extends Base{
         $qrcode = Model('qrcode')->getCustomerService();
         if($result){
             $this->assign('result', $result);
-            $this->assign('qrcode', $qrcode['code']);
+            $this->assign('qrcode', $qrcode);
         }
         return view();
     }
