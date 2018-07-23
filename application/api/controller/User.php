@@ -48,4 +48,20 @@ class User extends Base{
         $this->returnJson(0, '退出失败');
     }
 
+    //设置头像
+    public function setHeads(){
+        $token = $this->checkToken();
+        $redis = $this->redisConnect();
+
+        $uid = $redis->get($token);
+        $head = $_POST['head'];
+
+        $result = Model('user')->setUserHeads($uid, $head);
+        if($result){
+            $this->returnJson(1, '头像修改成功', $result);
+        }
+        $this->returnJson(0, '头像修改失败');
+
+    }
+
 }

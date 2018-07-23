@@ -10,7 +10,7 @@ class Heads extends Model{
     protected $table = 'heads';
 
     public function getHeads(){
-        $result = Db::query("select head from heads");
+        $result = Db::query("select head from heads order by head desc");
         if($result){
             return $result;
         }

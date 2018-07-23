@@ -64,26 +64,13 @@ class PersonalCenter extends Base{
     //获取头像
     public function heads(){
         $result = Model('heads')->getHeads();
+        foreach($result as $v){
+            $heads[] = $v['head'];
+        }
         if($result){
-            $this->returnJson(1, '请求成功', $result);
+            $this->returnJson(1, '请求成功', $heads);
         }
         $this->returnJson(0, '请求失败');
-    }
-
-    //设置头像
-    public function setHeads(){
-        $token = $this->checkToken();
-        $redis = $this->redisConnect();
-
-        $uid = $redis->get($token);
-        $head = $_POST['head'];
-
-        $result = Model('user')->setUserHeads($uid, $head);
-        if($result){
-            $this->returnJson(1, '头像修改成功', $result);
-        }
-        $this->returnJson(0, '头像修改失败');
-
     }
 
 }
