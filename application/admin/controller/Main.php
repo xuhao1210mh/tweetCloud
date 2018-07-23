@@ -4,6 +4,7 @@ namespace app\admin\controller;
 
 use \app\admin\controller\Base;
 use \think\facade\Session;
+use \think\Db;
 
 class Main extends Base{
 
@@ -16,6 +17,13 @@ class Main extends Base{
         $this->checkSession();
         $username = Session::get('username');
         $this->assign('username', $username);
+
+        $user = Db::query("select count(*) as sum from user where status=1");
+        $this->assign('user_sum', $user[0]['sum']);
+
+        $product = Db::query("select count(*) as sum from product where status=1");
+        $this->assign('product_sum', $product[0]['sum']);
+
         return view();
     }
 
