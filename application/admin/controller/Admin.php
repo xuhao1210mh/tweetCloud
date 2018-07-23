@@ -30,4 +30,30 @@ class Admin extends Base{
         return view();
     }
 
+    public function adminAdd(Request $request){
+        if($request->isAjax()){
+            $data = [
+                'username' => $_POST['username'],
+                'password' => $_POST['password'],
+                'create_time' => date('Y:m:d H:i:s'),
+                'status' => 1
+            ];
+            $result = Model('admin')->postAdmin($data);
+            if($result){
+                $this->success('添加成功');
+            }
+            $this->error('添加失败');
+        }
+        return view();
+    }
+
+    public function adminDel(){
+        $uid = $_POST['uid'];
+        $result = Model('admin')->deleteAdmin($uid);
+        if($result){
+            $this->success('删除成功');
+        }
+        $this->error('删除失败');
+    }
+
 }

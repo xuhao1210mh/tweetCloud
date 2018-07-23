@@ -33,7 +33,7 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so layui-form-pane">
-          <input class="layui-input" placeholder="" name="push_id">
+          <input class="layui-input" placeholder="请输入用户id" name="id">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon"></i>搜索</button>
         </form>
       </div>
@@ -89,14 +89,14 @@
                     <i class="iconfont">&#xe6a2;</i>查看</button>
                 <!-- <button class="layui-btn-green layui-btn layui-btn-xs" onclick="x_admin_show('审核','pushYes?push_id={}',500,500)" href="javascript:;">
                     <i class="iconfont">&#xe6b1;</i>通过</button> -->
-                <button class="layui-btn-danger layui-btn layui-btn-xs" onclick="no(this, '{}')" href="javascript:;">
-                    <i class="iconfont">&#xe6b7;</i>删除</button>
+                <button class="layui-btn-green layui-btn layui-btn-xs" onclick="finish(this, '{$val.id}')" href="javascript:;">
+                    <i class="iconfont">&#xe6b7;</i>完成提现</button>
               </td>
             </tr>
           {/volist}
         </tbody>
       </table>
-      <div class="page">
+      <!-- <div class="page">
         <div>
           <a class="prev" href="">&lt;&lt;</a>
           <a class="num" href="">1</a>
@@ -105,7 +105,7 @@
           <a class="num" href="">489</a>
           <a class="next" href="">&gt;&gt;</a>
         </div>
-      </div>
+      </div> -->
 
     </div>
     <script>
@@ -148,11 +148,22 @@
       }
 
       /*用户-删除*/
-      function yes(obj,id){
+      function finish(obj,id){
           layer.confirm('确认要删除吗？',function(index){
               //发异步删除数据
+              $.ajax({
+                url: "{:url('/admin/withdraw/withdrawFinish')}",
+                type: "post",
+                dataType: "json",
+                data: {
+                  id: id
+                },
+                success: function(res){
+
+                }
+              });
               $(obj).parents("tr").remove();
-              layer.msg('已删除!',{icon:1,time:1000});
+              layer.msg('完成提现!',{icon:1,time:1000});
           });
       }
 

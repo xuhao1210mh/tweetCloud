@@ -118,4 +118,38 @@ class Setting extends Base{
         return view();
     }
 
+    //上传头像
+    public function uploadHeads(Request $request){
+        $file_path = 'files/user/heads';
+
+        if(!is_dir($file_path)){
+            mkdir($file_path, 0777, true);
+        }
+
+        $file = $request->file();
+
+        foreach($file as $v){
+            $file_info = $v;
+        }
+
+        $image = \think\Image::open($file_info);
+        $ext =  $image->type();
+        $img_path = $file_path . '/' . uniqid('Usr') . '.' .$ext;
+        $info = $image->thumb(200, 200)->save($img_path);
+
+        if($info){
+            $img_path = 'http://' . $_SERVER['HTTP_HOST'] .'/'. $img_path;
+            $data['head'] = $img_path;
+            $result = Model('heads')->setHeads($data);
+            if($result){
+                echo json_encode(['code' => 1, 'msg' => '上传成功', 'data' => $img_path]);
+                exit;
+            }
+            echo json_encode(['code' => 1, 'msg' => '上传失败']);
+            exit;
+        }
+        echo json_encode(['code' => 1, 'msg' => '上传失败']);
+        exit;
+    }
+
 }

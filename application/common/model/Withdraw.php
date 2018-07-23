@@ -38,7 +38,7 @@ class Withdraw extends Model{
     //获取所有提现申请单
     public function getAllWithdraw($id = ''){
         if(!empty($id)){
-            $result = $this->where("status=1 and id='$id'")->order('create_date desc')->order('create_time desc')->select();
+            $result = $this->where("status=1 and uid='$id'")->order('create_date desc')->order('create_time desc')->select();
             return $result;
         }
         $result = $this->where("status=1")->order('create_date desc')->order('create_time desc')->select();
@@ -50,6 +50,37 @@ class Withdraw extends Model{
         $result = $this->where("id='$id'")->find();
         if($result){
             return $result;
+        }
+        return 0;
+    }
+
+    //改变提现单状态
+    public function finishThisOrder($id){
+        $result = $this->save([
+            'status' => 2
+        ], ['id' => $id]);
+        if($result){
+            return 1;
+        }
+        return 0;
+    }
+
+    public function getAllFinishWithdraw($id = ''){
+        if(!empty($id)){
+            $result = $this->where("status=2 and uid='$id'")->order('create_date desc')->order('create_time desc')->select();
+            return $result;
+        }
+        $result = $this->where("status=2")->order('create_date desc')->order('create_time desc')->select();
+        return $result;
+    }
+
+    //改变提现单状态(删除)
+    public function delThisOrder($id){
+        $result = $this->save([
+            'status' => 0
+        ], ['id' => $id]);
+        if($result){
+            return 1;
         }
         return 0;
     }

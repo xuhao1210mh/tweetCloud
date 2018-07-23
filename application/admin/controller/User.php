@@ -27,10 +27,17 @@ class User extends Base{
     //添加用户
     public function userAdd(Request $request){
         if($request->isAjax()){
+            $data = Model('heads')->getHeads();
+            foreach($data as $v){
+                $heads[] =  $v['head'];
+            }
+
+            $head = $heads[array_rand($heads, 1)];
             $data = [
                 'phone' => $_POST['phone'],
                 'nickname' => $_POST['nickname'],
                 'password' => md5($_POST['password']),
+                'head' => $head,
                 'level' => '一',
                 'money' => 0,
                 'create_time' => date('Y-m-d H:i:s'),

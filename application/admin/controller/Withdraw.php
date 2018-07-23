@@ -9,7 +9,7 @@ class Withdraw extends Base{
 
     public function withdrawList(Request $request){
         //id为单号id
-        $id = $_POST['id'];
+        $id = $_GET['id'];
         if(!empty($id)){
             $result = Model('withdraw')->getAllWithdraw($id);
             $this->assign('result', $result);
@@ -42,8 +42,36 @@ class Withdraw extends Base{
         return view();
     }
 
-    public function finishPay(){
-        
+    public function withdrawFinish(){
+        $id = $_POST['id'];
+        $result = Model('withdraw')->finishThisOrder($id);
+        if($result){
+            $this->success('已完成');
+        }
+        $this->error('未知错误');
+    }
+
+    public function withdrawFinishList(){
+        //id为单号id
+        $id = $_GET['id'];
+        if(!empty($id)){
+            $result = Model('withdraw')->getAllFinishWithdraw($id);
+            $this->assign('result', $result);
+        }else{
+            $result = Model('withdraw')->getAllFinishWithdraw();
+            $this->assign('result', $result);
+        }
+        return view();
+    }
+
+    //删除提现申请单
+    public function withdrawDelete(){
+        $id = $_POST['id'];
+        $result = Model('withdraw')->delThisOrder($id);
+        if($result){
+            $this->success('删除成功');
+        }
+        $this->error('删除失败');
     }
 
 }

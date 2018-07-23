@@ -25,7 +25,7 @@ class Product extends Base{
     //产品列表
     public function product(){
         $name = $_GET['name'];
-        if(empty($name)){
+        if(!empty($name)){
             $result = Model('product')->getProductList($name);
             $this->assign('result', $result);
         }else{

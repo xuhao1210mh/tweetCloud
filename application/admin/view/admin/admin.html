@@ -36,14 +36,14 @@
         <form class="layui-form layui-col-md12 x-so">
           <!-- <input class="layui-input" placeholder="开始日" name="start" id="start">
           <input class="layui-input" placeholder="截止日" name="end" id="end"> -->
-          <input type="text" name="phone"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
-          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+          <!-- <input type="text" name="phone"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
+          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button> -->
         </form>
       </div>
       <xblock>
         <!-- <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button> -->
-        <button class="layui-btn" onclick="x_admin_show('添加用户','userAdd',600,400)"><i class="layui-icon"></i>添加</button>
-        <span class="x-right" style="line-height:40px">共有数据：88 条</span>
+        <button class="layui-btn" onclick="x_admin_show('添加用户','adminAdd',600,400)"><i class="layui-icon"></i>添加</button>
+        <!-- <span class="x-right" style="line-height:40px">共有数据：88 条</span> -->
       </xblock>
       <table class="layui-table">
         <thead>
@@ -81,7 +81,7 @@
                 <!-- <a onclick="x_admin_show('修改密码','member-password.html',600,400)" title="修改密码" href="javascript:;">
                   <i class="layui-icon">&#xe631;</i>
                 </a> -->
-                <button class="layui-btn-danger layui-btn layui-btn-xs" onclick="member_del(this,'{$val.uid}')" href="javascript:;">
+                <button class="layui-btn-danger layui-btn layui-btn-xs" onclick="del(this,'{$val.uid}')" href="javascript:;">
                   <i class="layui-icon">&#xe640;</i>
                   删除
                 </button>
@@ -141,11 +141,11 @@
       }
 
       /*用户-删除*/
-      function member_del(obj,uid){
+      function del(obj,uid){
           layer.confirm('确认要删除吗？',function(index){
               //发异步删除数据
               $.ajax({
-                url: "{:url('/admin/user/userDel')}",
+                url: "{:url('/admin/admin/adminDel')}",
                 type: "post",
                 dataType: "json",
                 data: {

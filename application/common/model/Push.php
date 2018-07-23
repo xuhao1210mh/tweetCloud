@@ -27,21 +27,21 @@ class Push extends Model{
     }
 
     //获取所有直推信息
-    public function getAllPush($push_id = ''){
-        if($push_id == ''){
+    public function getAllPush($name = ''){
+        if($name == ''){
             $result = $this->where("status=1")->order("create_time desc")->select();
             return $result;
         }
-        $result = $this->where("status=1 and push_id='$push_id'")->order("create_time desc")->select();
+        $result = $this->where("status=1 and name='$name'")->order("create_time desc")->select();
         return $result;
     }
 
-    public function getAccessPush($push_id=''){
-        if($push_id == ''){
+    public function getAccessPush($name=''){
+        if($name == ''){
             $result = $this->where("status=2")->order("create_time desc")->select();
             return $result;
         }
-        $result = $this->where("status=2 and push_id='$push_id'")->order("create_time desc")->select();
+        $result = $this->where("status=2 and name='$name'")->order("create_time desc")->select();
         return $result;
     }
 

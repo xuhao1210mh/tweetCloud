@@ -21,21 +21,11 @@ class Admin extends Model{
 
     //获取管理员列表
     public function getAdminList(){
-        $result = Model('admin')->select();
+        $result = Model('admin')->where("status=1")->select();
         if($result){
             return $result;
         }
         return 0;
-    }
-
-    //创建管理员
-    public function createAdmin($data){
-        
-    }
-
-    //删除管理员
-    public function deleteAdmin($uid){
-        
     }
 
     //修改管理员信息
@@ -54,6 +44,26 @@ class Admin extends Model{
         $result = $this->where("uid='$uid'")->find();
         if($result){
             return $result;
+        }
+        return 0;
+    }
+
+    //添加管理员
+    public function postAdmin($data){
+        $result = $this->save($data);
+        if($result){
+            return 1;
+        }
+        return 0;
+    }
+
+    //删除管理员
+    public function deleteAdmin($uid){
+        $result = $this->save([
+            'status' => 0
+        ], ['uid' => $uid]);
+        if($result){
+            return 1;
         }
         return 0;
     }

@@ -10,12 +10,12 @@ class Push extends Base{
     
     //申请单列表
     public function pushList(Request $request){
-        $push_id = $_GET['push_id'];
-        if($push_id == ''){
+        $name = $_GET['name'];
+        if($name == ''){
             $result = Model('push')->getAllPush();
             $this->assign('result', $result);
         }else{
-            $result = Model('push')->getAllPush($push_id);
+            $result = Model('push')->getAllPush($name);
             $this->assign('result', $result);
         }
         return view();
@@ -23,12 +23,12 @@ class Push extends Base{
 
     //审核通过申请单
     public function pushAccess(Request $request){
-        $push_id = $_GET['push_id'];
-        if($push_id == ''){
+        $name = $_GET['name'];
+        if($name == ''){
             $result = Model('push')->getAccessPush();
             $this->assign('result', $result);
         }else{
-            $result = Model('push')->getAccessPush($push_id);
+            $result = Model('push')->getAccessPush($name);
             $this->assign('result', $result);
         }
         return view();
