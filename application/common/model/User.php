@@ -143,4 +143,15 @@ class User extends Model{
         return 0;
     }
 
+    //设置用户头像
+    public function setUserHeads($uid, $head){
+        $result = $this->save([
+            'head' => $head
+        ], ['uid' => $uid]);
+        if($result){
+            return $result;
+        }
+        return 0;
+    }
+
 }

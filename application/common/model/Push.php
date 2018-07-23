@@ -165,4 +165,9 @@ class Push extends Model{
         return 0;
     }
 
+    public function getClientPush($push_id){
+        $result = $this->where("push_id='$push_id'")->order("create_time desc")->select();
+        return $result;
+    }
+
 }

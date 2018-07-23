@@ -48,7 +48,7 @@ class Push extends Base{
     //申请人信息
     public function pushCheck(){
         $push_id = $_GET['push_id'];
-        $result = Model('push')->getAllPush($push_id);
+        $result = Model('push')->getClientPush($push_id);
         $this->assign('result', $result);
 
         $client_id = $result[0]['client_id'];

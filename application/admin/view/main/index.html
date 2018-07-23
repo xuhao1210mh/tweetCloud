@@ -19,20 +19,20 @@
 <body>
     <!-- 顶部开始 -->
     <div class="container">
-        <div class="logo"><a href="./index.html">X-admin v2.0</a></div>
+        <div class="logo"><a href="./index.html">推客云</a></div>
         <div class="left_open">
             <i title="展开左侧栏" class="iconfont">&#xe699;</i>
-        </div>
+        <!-- </div>
         <ul class="layui-nav left fast-add" lay-filter="">
           <li class="layui-nav-item">
             <a href="javascript:;">+新增</a>
-            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+            <dl class="layui-nav-child"> 
               <dd><a onclick="x_admin_show('资讯','http://www.baidu.com')"><i class="iconfont">&#xe6a2;</i>资讯</a></dd>
               <dd><a onclick="x_admin_show('图片','http://www.baidu.com')"><i class="iconfont">&#xe6a8;</i>图片</a></dd>
                <dd><a onclick="x_admin_show('用户','http://www.baidu.com')"><i class="iconfont">&#xe6b8;</i>用户</a></dd>
             </dl>
           </li>
-        </ul>
+        </ul> -->
         <ul class="layui-nav right" lay-filter="">
           <li class="layui-nav-item">
             <a href="javascript:;">admin</a>
@@ -42,7 +42,7 @@
               <dd><a href="{:url('/admin/entry/login')}">退出</a></dd>
             </dl>
           </li>
-          <li class="layui-nav-item to-index"><a href="/">前台首页</a></li>
+          <li class="layui-nav-item to-index"><a href="{:url('/admin/entry/login')}}">登录页</a></li>
         </ul>
         
     </div>
@@ -62,7 +62,7 @@
                     <li>
                         <a _href="{:url('/admin/user/userList')}">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>用户列表</cite>
+                            <cite>用户管理</cite>
                             
                         </a>
                     </li >
@@ -99,7 +99,7 @@
                     <li>
                         <a _href="{:url('/admin/withdraw/withdrawList')}">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>提现申请</cite>
+                            <cite>提现申请列表</cite>
                         </a>
                     </li >
                     <li>

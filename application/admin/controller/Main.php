@@ -24,6 +24,15 @@ class Main extends Base{
         $product = Db::query("select count(*) as sum from product where status=1");
         $this->assign('product_sum', $product[0]['sum']);
 
+        $push = Db::query("select count(*) as sum from push");
+        $this->assign('push_sum', $push[0]['sum']);
+
+        $withdraw = Db::query("select count(*) as sum from withdraw");
+        $this->assign('withdraw_sum', $withdraw[0]['sum']);
+
+        $admin = Db::query("select count(*) as sum from admin where status=1");
+        $this->assign('admin_sum', $admin[0]['sum']);
+
         return view();
     }
 

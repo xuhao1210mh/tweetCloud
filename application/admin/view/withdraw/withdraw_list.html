@@ -23,9 +23,9 @@
     <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">首页</a>
-        <a href="">演示</a>
+        <a href="">提现管理</a>
         <a>
-          <cite>导航元素</cite></a>
+          <cite>提现申请列表</cite></a>
       </span>
       <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
         <i class="layui-icon" style="line-height:30px">ဂ</i></a>
@@ -80,16 +80,16 @@
               </td>
               <td>{$val.create_date} {$val.create_time}</td>
               <td class="td-status">
-                  <span class="layui-btn layui-btn-green layui-btn-mini">
+                  <span class="layui-btn layui-btn-warm layui-btn-mini">
                     已申请
                   </span>
               </td>
               <td class="td-manage">
-                <button class="layui-btn-normal layui-btn layui-btn-xs" onclick="x_admin_show('查看申请人信息','withdrawInfo?id={$val.id}&uid={$val.uid}',500,500)" href="javascript:;">
+                <button class="layui-btn-normal layui-btn layui-btn-xs" onclick="x_admin_show('查看提现人信息','withdrawInfo?id={$val.id}&uid={$val.uid}',500,500)" href="javascript:;">
                     <i class="iconfont">&#xe6a2;</i>查看</button>
                 <!-- <button class="layui-btn-green layui-btn layui-btn-xs" onclick="x_admin_show('审核','pushYes?push_id={}',500,500)" href="javascript:;">
                     <i class="iconfont">&#xe6b1;</i>通过</button> -->
-                <button class="layui-btn-green layui-btn layui-btn-xs" onclick="finish(this, '{$val.id}')" href="javascript:;">
+                <button class="layui-btn-normal layui-btn layui-btn-xs" onclick="finish(this, '{$val.id}')" href="javascript:;">
                     <i class="iconfont">&#xe6b7;</i>完成提现</button>
               </td>
             </tr>
@@ -149,7 +149,7 @@
 
       /*用户-删除*/
       function finish(obj,id){
-          layer.confirm('确认要删除吗？',function(index){
+          layer.confirm('确认要完成提现吗？',function(index){
               //发异步删除数据
               $.ajax({
                 url: "{:url('/admin/withdraw/withdrawFinish')}",
