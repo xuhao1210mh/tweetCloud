@@ -21,7 +21,7 @@ class UploadImage extends Base{
         $file = $request->file();
 
         if(empty($file)){
-            $this->returnJson(0, '上传失败');
+            $this->returnJson(2, '未接收到图片');
             exit;
         }
 
